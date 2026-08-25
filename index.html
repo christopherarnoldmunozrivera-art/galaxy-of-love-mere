@@ -54,44 +54,37 @@ canvas.dragging{
 
 
 /* =========================================================
-   BOTON DE MUSICA
+   CONTROLES
 ========================================================= */
 
-#musicButton{
-
+.controls{
     position:fixed;
-
     right:22px;
     bottom:22px;
+    z-index:30;
 
-    z-index:20;
+    display:flex;
+    gap:10px;
+}
 
+.controlButton{
     width:48px;
     height:48px;
 
-    border:none;
     border-radius:50%;
+    border:1px solid rgba(255,100,180,.35);
 
     background:rgba(255,45,145,.12);
-
-    color:white;
+    color:#fff;
 
     font-size:20px;
-
     cursor:pointer;
 
-    border:
-        1px solid
-        rgba(255,100,180,.35);
+    backdrop-filter:blur(8px);
 
     box-shadow:
-        0 0 12px
-        rgba(255,50,150,.35),
-
-        inset 0 0 12px
-        rgba(255,50,150,.12);
-
-    backdrop-filter:blur(8px);
+        0 0 12px rgba(255,50,150,.35),
+        inset 0 0 12px rgba(255,50,150,.12);
 
     transition:
         transform .2s ease,
@@ -99,48 +92,278 @@ canvas.dragging{
         box-shadow .2s ease;
 }
 
-#musicButton:hover{
-
+.controlButton:hover{
     transform:scale(1.08);
 
-    background:
-        rgba(255,45,145,.22);
+    background:rgba(255,45,145,.22);
 
     box-shadow:
-        0 0 18px
-        rgba(255,50,150,.55),
-
-        inset 0 0 14px
-        rgba(255,50,150,.18);
+        0 0 20px rgba(255,50,150,.55),
+        inset 0 0 14px rgba(255,50,150,.18);
 }
 
-#musicButton.playing{
-
-    animation:
-        musicPulse 1.6s infinite;
+.controlButton.playing{
+    animation:musicPulse 1.6s infinite;
 }
 
 @keyframes musicPulse{
-
     0%,100%{
-
         box-shadow:
-            0 0 12px
-            rgba(255,50,150,.35),
-
-            inset 0 0 12px
-            rgba(255,50,150,.10);
+            0 0 12px rgba(255,50,150,.35),
+            inset 0 0 12px rgba(255,50,150,.10);
     }
 
     50%{
-
         box-shadow:
-            0 0 25px
-            rgba(255,50,150,.75),
-
-            inset 0 0 16px
-            rgba(255,50,150,.20);
+            0 0 25px rgba(255,50,150,.75),
+            inset 0 0 16px rgba(255,50,150,.20);
     }
+}
+
+
+/* =========================================================
+   PANEL
+========================================================= */
+
+#settingsPanel{
+    position:fixed;
+
+    right:22px;
+    bottom:82px;
+
+    width:285px;
+
+    padding:18px;
+
+    z-index:29;
+
+    background:rgba(10,3,18,.90);
+
+    border:1px solid rgba(255,80,170,.25);
+    border-radius:18px;
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+        0 0 25px rgba(255,40,140,.22),
+        inset 0 0 25px rgba(255,40,140,.05);
+
+    color:#fff;
+
+    opacity:0;
+
+    transform:
+        translateY(10px)
+        scale(.96);
+
+    pointer-events:none;
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+#settingsPanel.show{
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events:auto;
+}
+
+.settingsTitle{
+    text-align:center;
+
+    font-size:15px;
+    letter-spacing:2px;
+
+    margin-bottom:18px;
+
+    text-shadow:
+        0 0 10px rgba(255,60,150,.6);
+}
+
+.setting{
+    margin-bottom:18px;
+}
+
+.settingLabel{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:8px;
+
+    font-size:12px;
+
+    color:rgba(255,255,255,.82);
+}
+
+.value{
+    color:rgba(255,150,205,.95);
+}
+
+
+/* =========================================================
+   SLIDERS
+========================================================= */
+
+input[type="range"]{
+    width:100%;
+    height:4px;
+
+    appearance:none;
+    -webkit-appearance:none;
+
+    background:rgba(255,255,255,.14);
+
+    border-radius:10px;
+    outline:none;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+    appearance:none;
+    -webkit-appearance:none;
+
+    width:14px;
+    height:14px;
+
+    border-radius:50%;
+
+    background:#ff5aa8;
+
+    border:1px solid rgba(255,255,255,.7);
+
+    box-shadow:
+        0 0 10px rgba(255,60,150,.7);
+
+    cursor:pointer;
+}
+
+input[type="range"]::-moz-range-thumb{
+    width:14px;
+    height:14px;
+
+    border-radius:50%;
+
+    background:#ff5aa8;
+
+    border:1px solid rgba(255,255,255,.7);
+
+    box-shadow:
+        0 0 10px rgba(255,60,150,.7);
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   BOTONES DE OPCIONES
+========================================================= */
+
+.optionButtons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+}
+
+.optionButton{
+    padding:9px 6px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,100,180,.22);
+
+    background:rgba(255,255,255,.05);
+
+    color:rgba(255,255,255,.82);
+
+    cursor:pointer;
+
+    font-size:11px;
+
+    transition:
+        background .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+}
+
+.optionButton:hover{
+    background:rgba(255,70,160,.12);
+}
+
+.optionButton.active{
+    background:rgba(255,60,150,.18);
+
+    border-color:
+        rgba(255,100,180,.55);
+
+    box-shadow:
+        0 0 10px
+        rgba(255,60,150,.25);
+}
+
+
+/* =========================================================
+   ROTACION
+========================================================= */
+
+.rotationButton{
+    width:100%;
+
+    padding:10px;
+
+    border-radius:11px;
+
+    border:1px solid rgba(255,100,180,.25);
+
+    background:rgba(255,50,150,.10);
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    transition:
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.rotationButton:hover{
+    background:rgba(255,50,150,.18);
+}
+
+.rotationButton.on{
+    box-shadow:
+        0 0 12px rgba(255,50,150,.3);
+}
+
+
+/* =========================================================
+   RESTAURAR
+========================================================= */
+
+.resetButton{
+    width:100%;
+
+    margin-top:10px;
+
+    padding:9px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.10);
+
+    background:rgba(255,255,255,.05);
+
+    color:rgba(255,255,255,.7);
+
+    cursor:pointer;
+
+    font-size:11px;
 }
 </style>
 </head>
@@ -151,6 +374,11 @@ canvas.dragging{
     Para mi Mere ❤️
 </div>
 
+
+<!-- =====================================================
+     MUSICA
+===================================================== -->
+
 <audio
     id="music"
     src="musica.mp3"
@@ -158,28 +386,308 @@ canvas.dragging{
     preload="auto">
 </audio>
 
-<button
-    id="musicButton"
-    aria-label="Reproducir música">
-    ♫
-</button>
+
+<!-- =====================================================
+     PANEL DE CONFIGURACION
+===================================================== -->
+
+<div id="settingsPanel">
+
+    <div class="settingsTitle">
+        ⚙️ Configuración
+    </div>
+
+
+    <!-- VELOCIDAD -->
+
+    <div class="setting">
+
+        <div class="settingLabel">
+
+            <span>
+                🪐 Velocidad de órbita
+            </span>
+
+            <span
+                class="value"
+                id="speedValue">
+                Normal
+            </span>
+
+        </div>
+
+        <input
+            id="speedSlider"
+            type="range"
+            min="0"
+            max="3"
+            step="1"
+            value="2">
+    </div>
+
+
+    <!-- TAMAÑO -->
+
+    <div class="setting">
+
+        <div class="settingLabel">
+
+            <span>
+                ❤️ Corazón principal
+            </span>
+
+            <span
+                class="value"
+                id="heartSizeValue">
+                Normal
+            </span>
+
+        </div>
+
+        <input
+            id="heartSizeSlider"
+            type="range"
+            min="0.75"
+            max="1.35"
+            step="0.05"
+            value="1">
+    </div>
+
+
+    <!-- COLOR -->
+
+    <div class="setting">
+
+        <div class="settingLabel">
+
+            <span>
+                🎨 Color de corazones
+            </span>
+
+            <span
+                class="value"
+                id="heartColorValue">
+                Rosa
+            </span>
+
+        </div>
+
+
+        <div class="optionButtons">
+
+            <button
+                class="optionButton active"
+                data-color="pink">
+
+                💗 Rosa
+
+            </button>
+
+            <button
+                class="optionButton"
+                data-color="red">
+
+                ❤️ Rojo
+
+            </button>
+
+            <button
+                class="optionButton"
+                data-color="yellow">
+
+                💛 Amarillo
+
+            </button>
+
+            <button
+                class="optionButton"
+                data-color="white">
+
+                🤍 Blanco
+
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- BRILLO ESTRELLAS -->
+
+    <div class="setting">
+
+        <div class="settingLabel">
+
+            <span>
+                ✨ Brillo de estrellas
+            </span>
+
+            <span
+                class="value"
+                id="starBrightnessValue">
+                Normal
+            </span>
+
+        </div>
+
+        <input
+            id="starBrightnessSlider"
+            type="range"
+            min="0.35"
+            max="2"
+            step="0.05"
+            value="1">
+    </div>
+
+
+    <!-- ROTACION -->
+
+    <div class="setting">
+
+        <div class="settingLabel">
+
+            <span>
+                🔄 Rotación automática
+            </span>
+
+        </div>
+
+        <button
+            id="rotationButton"
+            class="rotationButton on">
+
+            🔄 Rotación automática: ON
+
+        </button>
+
+    </div>
+
+
+    <!-- RESTAURAR -->
+
+    <button
+        id="resetButton"
+        class="resetButton">
+
+        ↩️ Restaurar configuración
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     CONTROLES
+===================================================== -->
+
+<div class="controls">
+
+    <button
+        id="musicButton"
+        class="controlButton"
+        aria-label="Reproducir música">
+
+        ♫
+
+    </button>
+
+    <button
+        id="settingsButton"
+        class="controlButton"
+        aria-label="Configuración">
+
+        ⚙️
+
+    </button>
+
+</div>
+
 
 <canvas id="galaxy"></canvas>
 
+
 <script>
+
+/* =========================================================
+   CANVAS
+========================================================= */
 
 const canvas =
     document.getElementById("galaxy");
 
 const ctx =
-    canvas.getContext("2d",{
-        alpha:false,
-        desynchronized:true
-    });
+    canvas.getContext(
+        "2d",
+        {
+            alpha:false,
+            desynchronized:true
+        }
+    );
 
 let W = 0;
 let H = 0;
 let DPR = 1;
+
+
+/* =========================================================
+   CONFIGURACION
+========================================================= */
+
+const settings = {
+
+    orbitSpeed:2,
+
+    heartSize:1,
+
+    autoRotation:true,
+
+    heartColor:"pink",
+
+    starBrightness:1
+};
+
+
+/* =========================================================
+   COLORES DE CORAZON
+========================================================= */
+
+const heartColors = {
+
+    pink:{
+        fill:"rgba(255,55,150,.90)",
+        shadow:"rgba(255,55,150,.60)"
+    },
+
+    red:{
+        fill:"rgba(255,40,65,.92)",
+        shadow:"rgba(255,30,50,.62)"
+    },
+
+    yellow:{
+        fill:"rgba(255,210,55,.92)",
+        shadow:"rgba(255,190,30,.62)"
+    },
+
+    white:{
+        fill:"rgba(255,255,255,.94)",
+        shadow:"rgba(255,255,255,.55)"
+    }
+};
+
+
+/* =========================================================
+   CAMARA
+========================================================= */
+
+const camera = {
+
+    yaw:0,
+
+    pitch:0.12,
+
+    distance:1,
+
+    targetDistance:1
+};
 
 
 /* =========================================================
@@ -222,8 +730,11 @@ function resize(){
     );
 
     createStars();
+
     createHearts();
+
     createCentralHeart();
+
     createLoveTexts();
 }
 
@@ -234,22 +745,6 @@ window.addEventListener(
 
 
 /* =========================================================
-   CAMARA
-========================================================= */
-
-const camera = {
-
-    yaw:0,
-
-    pitch:0.12,
-
-    distance:1,
-
-    targetDistance:1
-};
-
-
-/* =========================================================
    MOUSE
 ========================================================= */
 
@@ -257,6 +752,7 @@ let dragging = false;
 
 let lastX = 0;
 let lastY = 0;
+
 
 canvas.addEventListener(
     "mousedown",
@@ -269,9 +765,11 @@ canvas.addEventListener(
         );
 
         lastX = e.clientX;
+
         lastY = e.clientY;
     }
 );
+
 
 window.addEventListener(
     "mouseup",
@@ -285,6 +783,7 @@ window.addEventListener(
     }
 );
 
+
 window.addEventListener(
     "mousemove",
     e => {
@@ -293,10 +792,12 @@ window.addEventListener(
             return;
 
         const dx =
-            e.clientX-lastX;
+            e.clientX -
+            lastX;
 
         const dy =
-            e.clientY-lastY;
+            e.clientY -
+            lastY;
 
         lastX =
             e.clientX;
@@ -305,10 +806,10 @@ window.addEventListener(
             e.clientY;
 
         camera.yaw -=
-            dx*0.008;
+            dx * 0.008;
 
         camera.pitch -=
-            dy*0.006;
+            dy * 0.006;
 
         camera.pitch =
             Math.max(
@@ -333,7 +834,7 @@ canvas.addEventListener(
         e.preventDefault();
 
         camera.targetDistance +=
-            e.deltaY*0.0012;
+            e.deltaY * 0.0012;
 
         camera.targetDistance =
             Math.max(
@@ -345,7 +846,9 @@ canvas.addEventListener(
             );
 
     },
-    {passive:false}
+    {
+        passive:false
+    }
 );
 
 
@@ -366,18 +869,18 @@ function heartPoint(
         );
 
     const y =
-        13*Math.cos(t)
-        -5*Math.cos(2*t)
-        -2*Math.cos(3*t)
+        13 * Math.cos(t)
+        -5 * Math.cos(2*t)
+        -2 * Math.cos(3*t)
         -Math.cos(4*t);
 
     return{
 
         x:
-            x*scale,
+            x * scale,
 
         y:
-            -y*scale
+            -y * scale
     };
 }
 
@@ -401,8 +904,8 @@ function createHeartParticles(
     ){
 
         const t =
-            Math.random()*
-            Math.PI*2;
+            Math.random() *
+            Math.PI * 2;
 
         const p =
             heartPoint(
@@ -412,7 +915,7 @@ function createHeartParticles(
 
         const p2 =
             heartPoint(
-                t+0.015,
+                t + 0.015,
                 scale
             );
 
@@ -435,10 +938,13 @@ function createHeartParticles(
             dx/len;
 
         const thickness =
-            (Math.random()-.5)*
-            scale*.72;
+            (
+                Math.random()-.5
+            ) *
+            scale *
+            .72;
 
-        particles[i] = {
+        particles[i]={
 
             x:
                 p.x+
@@ -449,10 +955,14 @@ function createHeartParticles(
                 ny*thickness,
 
             size:
-                Math.random()*.70+.30,
+                Math.random()*
+                .70+
+                .30,
 
             alpha:
-                Math.random()*.55+.35
+                Math.random()*
+                .55+
+                .35
         };
     }
 
@@ -461,7 +971,7 @@ function createHeartParticles(
 
 
 /* =========================================================
-   PARTICULAS DE COLOR
+   PARTICULAS DECORATIVAS
 ========================================================= */
 
 const accentColors = [
@@ -503,7 +1013,7 @@ function createAccentParticles(
                 Math.random()*.65
             );
 
-        particles[i] = {
+        particles[i]={
 
             x:
                 Math.cos(angle)*
@@ -511,8 +1021,7 @@ function createAccentParticles(
 
             y:
                 Math.sin(angle)*
-                distance*
-                .62,
+                distance*.62,
 
             size:
                 Math.random()*
@@ -528,7 +1037,9 @@ function createAccentParticles(
                 ],
 
             alpha:
-                Math.random()*.35+.30
+                Math.random()*
+                .35+
+                .30
         };
     }
 
@@ -553,7 +1064,9 @@ const centralHeart = {
 function createCentralHeart(){
 
     const scale =
-        Math.min(W,H)*.014;
+        Math.min(W,H)*
+        .014*
+        settings.heartSize;
 
     centralHeart.scale =
         scale;
@@ -566,14 +1079,17 @@ function createCentralHeart(){
 
     centralHeart.accentParticles =
         createAccentParticles(
-            Math.min(W,H)*.035,
+            Math.min(W,H)*
+            .035*
+            settings.heartSize,
+
             65
         );
 }
 
 
 /* =========================================================
-   17 CORAZONES PEQUEÑOS
+   17 CORAZONES
 ========================================================= */
 
 const orbitHearts = [];
@@ -581,9 +1097,9 @@ const orbitHearts = [];
 
 function createHearts(){
 
-    orbitHearts.length = 0;
+    orbitHearts.length=0;
 
-    const count = 17;
+    const count=17;
 
     const radius =
         Math.min(W,H)*.34;
@@ -614,7 +1130,9 @@ function createHearts(){
 
             accentParticles:
                 createAccentParticles(
-                    Math.min(W,H)*.010,
+                    Math.min(W,H)*
+                    .010,
+
                     18
                 )
         });
@@ -623,118 +1141,79 @@ function createHearts(){
 
 
 /* =========================================================
-   FRASES ROMANTICAS
+   FRASES
 ========================================================= */
 
-const loveWords = [
+const loveWords=[
 
     "Mi princesa ❤️",
-
     "Mi niña 🥰",
-
     "Mi cielo 💍",
-
     "Mi corazón ❤️",
-
     "Mi amor 💗",
-
     "Mi ángel 😇",
-
     "Mi cuchurrumina 🥺",
-
     "Mi terroncito de azúcar 🍬",
-
     "Mi vida 💕",
-
     "Mi bonita 🌷",
-
     "Mi hermosa 💖",
-
     "Mi reina 👑",
-
     "Mi preciosa 💎",
-
     "Mi todo ❤️",
-
     "Amor mío 💕",
-
     "Mi muñequita 🎀",
-
     "Mi felicidad ☀️",
-
     "Mi bebé 🥺",
-
     "Mi niña hermosa 🌸",
-
     "Mi amorcito 💗",
-
     "Mi tesoro 💎",
-
     "Mi estrellita ⭐",
-
     "Mi princesa hermosa 👑",
-
     "Mi consentida 🥰",
-
     "Mi mundo 🌎",
-
     "Mi razón ❤️",
-
     "Mi dulzura 🍯",
-
     "Mi bonita 💐",
-
     "Mi compañera 🫶",
-
     "Mi persona favorita ❤️",
-
     "Mi sueño ✨",
-
     "Mi luna 🌙",
-
     "Mi sol ☀️",
-
     "Mi flor 🌹",
-
     "Mi pequeña 🥺",
-
     "Mi amor eterno 💍",
-
     "Mi hogar 🏠",
-
     "Mi locura 😍",
-
     "Mi paz 🕊️",
-
     "Mi alegría 🌷"
 ];
 
-const loveTexts = [];
+const loveTexts=[];
 
 
 function createLoveTexts(){
 
-    loveTexts.length = 0;
+    loveTexts.length=0;
 
     const base =
         Math.min(W,H);
 
     loveWords.forEach(
-        text => {
+        text=>{
 
             const radius =
                 base*
                 (
                     .42+
-                    Math.random()*.58
+                    Math.random()*
+                    .58
                 );
 
             const y =
                 (
                     Math.random()-.5
                 )*
-                base*
-                .60;
+                base*.60;
 
             const speed =
                 .00008+
@@ -763,19 +1242,17 @@ function createLoveTexts(){
    ESTRELLAS
 ========================================================= */
 
-let stars = [];
+let stars=[];
 
 
 function createStars(){
 
-    stars.length = 0;
+    stars.length=0;
 
     const amount =
         Math.max(
             600,
-            Math.floor(
-                W*H/1800
-            )
+            Math.floor(W*H/1800)
         );
 
     for(
@@ -817,15 +1294,14 @@ function createStars(){
                 .65+.3,
 
             twinkle:
-                Math.random()*
-                6.283
+                Math.random()*6.283
         });
     }
 }
 
 
 /* =========================================================
-   PROYECCION 3D
+   PROYECCION
 ========================================================= */
 
 function project3D(
@@ -917,13 +1393,20 @@ function drawStars(time){
         Math.sin(camera.pitch);
 
 
+    const galaxyTime =
+        settings.autoRotation
+            ? time
+            : 0;
+
+
     for(
         const star of stars
     ){
 
         const theta =
             star.theta+
-            time*.000045;
+            galaxyTime*.000045;
+
 
         const sinPhi =
             Math.sin(star.phi);
@@ -941,7 +1424,9 @@ function drawStars(time){
             star.radius;
 
         let y =
-            Math.cos(star.phi)*
+            Math.cos(
+                star.phi
+            )*
             star.radius;
 
         let z =
@@ -997,10 +1482,7 @@ function drawStars(time){
             px>W+10 ||
             py<-10 ||
             py>H+10
-        ){
-
-            continue;
-        }
+        ) continue;
 
 
         const twinkle =
@@ -1011,12 +1493,21 @@ function drawStars(time){
             )*.25;
 
 
+        const brightness =
+            settings.starBrightness;
+
+
         const size =
             Math.max(
                 .6,
                 star.size*
                 scale*
-                1.8
+                1.8*
+                Math.min(
+                    1.25,
+                    .85+
+                    brightness*.15
+                )
             );
 
 
@@ -1024,7 +1515,8 @@ function drawStars(time){
             Math.min(
                 1,
                 star.alpha*
-                twinkle
+                twinkle*
+                brightness
             );
 
 
@@ -1042,12 +1534,36 @@ function drawStars(time){
         ctx.fillStyle =
             "#ffffff";
 
+
+        /*
+           Un pequeño halo solo para
+           las estrellas grandes.
+        */
+
+        if(
+            brightness>1.35 &&
+            size>1.5
+        ){
+
+            ctx.shadowColor =
+                "#ffffff";
+
+            ctx.shadowBlur =
+                Math.min(
+                    7,
+                    size*
+                    brightness
+                );
+        }
+
+
         ctx.fillRect(
             -size/2,
             -size/2,
             size,
             size
         );
+
 
         ctx.restore();
     }
@@ -1077,7 +1593,6 @@ function drawGlow(){
             radius
         );
 
-
     gradient.addColorStop(
         0,
         "rgba(255,35,130,.16)"
@@ -1093,8 +1608,7 @@ function drawGlow(){
         "rgba(0,0,0,0)"
     );
 
-
-    ctx.fillStyle =
+    ctx.fillStyle=
         gradient;
 
     ctx.beginPath();
@@ -1120,7 +1634,7 @@ function drawOrbit(){
     const radius =
         Math.min(W,H)*.34;
 
-    const points = 70;
+    const points=70;
 
     ctx.beginPath();
 
@@ -1145,25 +1659,19 @@ function drawOrbit(){
                 radius
             );
 
-
-        if(i===0){
-
+        if(i===0)
             ctx.moveTo(
                 p.x,
                 p.y
             );
-
-        }else{
-
+        else
             ctx.lineTo(
                 p.x,
                 p.y
             );
-        }
     }
 
-
-    ctx.strokeStyle =
+    ctx.strokeStyle=
         "rgba(255,60,150,.08)";
 
     ctx.lineWidth=1;
@@ -1182,8 +1690,14 @@ function drawHeartParticles(
     rotation
 ){
 
-    const scale =
+    const scale=
         position.scale;
+
+    const color=
+        heartColors[
+            settings.heartColor
+        ];
+
 
     ctx.save();
 
@@ -1196,21 +1710,22 @@ function drawHeartParticles(
         rotation
     );
 
-    ctx.fillStyle =
-        "rgba(255,55,150,.9)";
+
+    ctx.fillStyle=
+        color.fill;
 
 
     for(
         const p of particles
     ){
 
-        const x =
+        const x=
             p.x*scale;
 
-        const y =
+        const y=
             p.y*scale;
 
-        const size =
+        const size=
             Math.max(
                 .25,
                 p.size*
@@ -1219,8 +1734,9 @@ function drawHeartParticles(
             );
 
 
-        ctx.globalAlpha =
+        ctx.globalAlpha=
             p.alpha;
+
 
         ctx.beginPath();
 
@@ -1251,7 +1767,7 @@ function drawAccentParticles(
     position
 ){
 
-    const scale =
+    const scale=
         position.scale;
 
     ctx.save();
@@ -1266,7 +1782,7 @@ function drawAccentParticles(
         const p of particles
     ){
 
-        const size =
+        const size=
             Math.max(
                 .35,
                 p.size*
@@ -1274,11 +1790,12 @@ function drawAccentParticles(
             );
 
 
-        ctx.globalAlpha =
+        ctx.globalAlpha=
             p.alpha;
 
-        ctx.fillStyle =
+        ctx.fillStyle=
             p.color;
+
 
         ctx.beginPath();
 
@@ -1302,8 +1819,6 @@ function drawAccentParticles(
 
 /* =========================================================
    TE AMO
-   MISMA LETRA QUE MI MERE
-   Y MISMA LOGICA DE ESCALA
 ========================================================= */
 
 function drawHeartText(
@@ -1311,10 +1826,10 @@ function drawHeartText(
     position
 ){
 
-    const scale =
+    const scale=
         position.scale;
 
-    const size =
+    const size=
         Math.max(
             4.5,
             7*scale
@@ -1323,43 +1838,36 @@ function drawHeartText(
 
     ctx.save();
 
-
-    /*
-       Mismo centro del corazón.
-    */
-
     ctx.translate(
         position.x,
         position.y
     );
 
-
-    ctx.textAlign =
+    ctx.textAlign=
         "center";
 
-    ctx.textBaseline =
+    ctx.textBaseline=
         "middle";
 
 
-    /*
-       Meredith.
-    */
-
-    ctx.font =
+    ctx.font=
         `normal ${size}px "Meredith",
         "Segoe Script",
         "Brush Script MT",
         cursive`;
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         "#ffffff";
 
 
-    ctx.shadowColor =
-        "rgba(255,55,150,.60)";
+    ctx.shadowColor=
+        heartColors[
+            settings.heartColor
+        ].shadow;
 
-    ctx.shadowBlur =
+
+    ctx.shadowBlur=
         Math.min(
             5,
             size*.35
@@ -1378,64 +1886,110 @@ function drawHeartText(
 
 
 /* =========================================================
-   17 CORAZONES ORBITALES
+   17 CORAZONES
 ========================================================= */
 
 function drawOrbitHearts(time){
 
-    const list = [];
-
-    const orbitSpeed =
-        time*.00035;
+    const list=[];
 
 
-    const cosYaw =
-        Math.cos(camera.yaw);
+    let orbitTime=
+        settings.autoRotation
+            ? time
+            : 0;
 
-    const sinYaw =
-        Math.sin(camera.yaw);
 
-    const cosPitch =
-        Math.cos(camera.pitch);
+    let speedMultiplier;
 
-    const sinPitch =
-        Math.sin(camera.pitch);
+
+    if(
+        settings.orbitSpeed===0
+    ){
+
+        speedMultiplier=.35;
+
+    }else if(
+        settings.orbitSpeed===1
+    ){
+
+        speedMultiplier=.70;
+
+    }else if(
+        settings.orbitSpeed===2
+    ){
+
+        speedMultiplier=1;
+
+    }else{
+
+        speedMultiplier=2;
+    }
+
+
+    const orbitSpeed=
+        orbitTime*
+        .00035*
+        speedMultiplier;
+
+
+    const cosYaw=
+        Math.cos(
+            camera.yaw
+        );
+
+    const sinYaw=
+        Math.sin(
+            camera.yaw
+        );
+
+
+    const cosPitch=
+        Math.cos(
+            camera.pitch
+        );
+
+    const sinPitch=
+        Math.sin(
+            camera.pitch
+        );
 
 
     for(
         const heart of orbitHearts
     ){
 
-        const angle =
+        const angle=
             heart.angle+
             orbitSpeed;
 
 
-        const x =
+        const x=
             Math.cos(angle)*
             heart.radius;
 
-        const y = 0;
+        const y=0;
 
-        const z =
+        const z=
             Math.sin(angle)*
             heart.radius;
 
 
-        const rx =
+        const rx=
             x*cosYaw-
             z*sinYaw;
 
-        let rz =
+        let rz=
             x*sinYaw+
             z*cosYaw;
 
 
-        const ry =
+        const ry=
             y*cosPitch-
             rz*sinPitch;
 
-        rz =
+
+        rz=
             y*sinPitch+
             rz*cosPitch;
 
@@ -1446,7 +2000,7 @@ function drawOrbitHearts(time){
             .7;
 
 
-        const scale =
+        const scale=
             Math.min(W,H)*
             .75/
             Math.max(
@@ -1487,11 +2041,6 @@ function drawOrbitHearts(time){
         const item of list
     ){
 
-        /*
-           El corazón siempre mira
-           hacia la cámara.
-        */
-
         drawHeartParticles(
             item.heart.particles,
             item.position,
@@ -1499,20 +2048,11 @@ function drawOrbitHearts(time){
         );
 
 
-        /*
-           Partículas de colores
-           estáticas.
-        */
-
         drawAccentParticles(
             item.heart.accentParticles,
             item.position
         );
 
-
-        /*
-           Te amo pegado al corazón.
-        */
 
         drawHeartText(
             "Te amo",
@@ -1523,62 +2063,71 @@ function drawOrbitHearts(time){
 
 
 /* =========================================================
-   TEXTOS ROMANTICOS EXTERIORES
+   TEXTOS EXTERIORES
 ========================================================= */
 
 function drawLoveTexts(time){
 
-    const list = [];
+    const list=[];
 
 
-    const cosYaw =
+    const cosYaw=
         Math.cos(camera.yaw);
 
-    const sinYaw =
+    const sinYaw=
         Math.sin(camera.yaw);
 
-    const cosPitch =
+    const cosPitch=
         Math.cos(camera.pitch);
 
-    const sinPitch =
+    const sinPitch=
         Math.sin(camera.pitch);
+
+
+    const textTime=
+        settings.autoRotation
+            ? time
+            : 0;
 
 
     for(
         const item of loveTexts
     ){
 
-        const angle =
+        const angle=
             item.angle+
-            time*item.speed;
+            textTime*
+            item.speed;
 
 
-        const x =
+        const x=
             Math.cos(angle)*
             item.radius;
 
-        const y =
+        const y=
             item.y;
 
-        const z =
+        const z=
             Math.sin(angle)*
             item.radius;
 
 
-        const rx =
+        const rx=
             x*cosYaw-
             z*sinYaw;
 
-        let rz =
+
+        let rz=
             x*sinYaw+
             z*cosYaw;
 
 
-        const ry =
+        const ry=
             y*cosPitch-
             rz*sinPitch;
 
-        rz =
+
+        rz=
             y*sinPitch+
             rz*cosPitch;
 
@@ -1589,7 +2138,7 @@ function drawLoveTexts(time){
             .7;
 
 
-        const scale =
+        const scale=
             Math.min(W,H)*
             .75/
             Math.max(
@@ -1598,7 +2147,7 @@ function drawLoveTexts(time){
             );
 
 
-        const position = {
+        const position={
 
             x:
                 W/2+
@@ -1615,7 +2164,9 @@ function drawLoveTexts(time){
 
 
         list.push({
+
             item,
+
             position
         });
     }
@@ -1632,11 +2183,11 @@ function drawLoveTexts(time){
         const obj of list
     ){
 
-        const p =
+        const p=
             obj.position;
 
 
-        const size =
+        const size=
             Math.max(
                 5,
                 Math.min(
@@ -1651,35 +2202,32 @@ function drawLoveTexts(time){
             p.x>W+100 ||
             p.y<-100 ||
             p.y>H+100
-        ){
-
-            continue;
-        }
+        ) continue;
 
 
         ctx.save();
 
 
-        ctx.textAlign =
+        ctx.textAlign=
             "center";
 
-        ctx.textBaseline =
+        ctx.textBaseline=
             "middle";
 
 
-        ctx.font =
+        ctx.font=
             `normal ${size}px Arial`;
 
 
-        ctx.fillStyle =
+        ctx.fillStyle=
             "rgba(255,205,225,.86)";
 
 
-        ctx.shadowColor =
+        ctx.shadowColor=
             "rgba(255,50,145,.65)";
 
 
-        ctx.shadowBlur =
+        ctx.shadowBlur=
             Math.min(
                 6,
                 size*.45
@@ -1700,13 +2248,11 @@ function drawLoveTexts(time){
 
 /* =========================================================
    CORAZON CENTRAL
-   MI MERE ❤️
-   MISMA LOGICA DE TE AMO
 ========================================================= */
 
 function drawCentralHeart(){
 
-    const position = {
+    const position={
 
         x:
             W/2,
@@ -1716,14 +2262,11 @@ function drawCentralHeart(){
 
         scale:
             Math.min(W,H)*
-            .00145/
+            .00145*
+            settings.heartSize/
             camera.distance
     };
 
-
-    /*
-       Corazón principal.
-    */
 
     drawHeartParticles(
         centralHeart.particles,
@@ -1732,11 +2275,6 @@ function drawCentralHeart(){
     );
 
 
-    /*
-       Partículas de colores
-       estáticas detrás del texto.
-    */
-
     drawAccentParticles(
         centralHeart.accentParticles,
         position
@@ -1744,15 +2282,13 @@ function drawCentralHeart(){
 
 
     /*
-       MI MERE ❤️
-       Usa la MISMA lógica que Te amo.
-       Solo es un poco más grande.
+       MISMA LOGICA QUE TE AMO
     */
 
     ctx.save();
 
 
-    const size =
+    const size=
         Math.max(
             4.5,
             9*position.scale
@@ -1765,29 +2301,31 @@ function drawCentralHeart(){
     );
 
 
-    ctx.textAlign =
+    ctx.textAlign=
         "center";
 
-    ctx.textBaseline =
+    ctx.textBaseline=
         "middle";
 
 
-    ctx.font =
+    ctx.font=
         `normal ${size}px "Meredith",
         "Segoe Script",
         "Brush Script MT",
         cursive`;
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         "#ffffff";
 
 
-    ctx.shadowColor =
-        "rgba(255,55,150,.60)";
+    ctx.shadowColor=
+        heartColors[
+            settings.heartColor
+        ].shadow;
 
 
-    ctx.shadowBlur =
+    ctx.shadowBlur=
         Math.min(
             6,
             size*.4
@@ -1809,22 +2347,22 @@ function drawCentralHeart(){
    MUSICA
 ========================================================= */
 
-const music =
+const music=
     document.getElementById(
         "music"
     );
 
-const musicButton =
+const musicButton=
     document.getElementById(
         "musicButton"
     );
 
-let musicPlaying = false;
+let musicPlaying=false;
 
 
 musicButton.addEventListener(
     "click",
-    async () => {
+    async()=>{
 
         try{
 
@@ -1832,9 +2370,9 @@ musicButton.addEventListener(
 
                 await music.play();
 
-                musicPlaying = true;
+                musicPlaying=true;
 
-                musicButton.textContent =
+                musicButton.textContent=
                     "❚❚";
 
                 musicButton.classList.add(
@@ -1845,9 +2383,9 @@ musicButton.addEventListener(
 
                 music.pause();
 
-                musicPlaying = false;
+                musicPlaying=false;
 
-                musicButton.textContent =
+                musicButton.textContent=
                     "♫";
 
                 musicButton.classList.remove(
@@ -1867,6 +2405,372 @@ musicButton.addEventListener(
 
 
 /* =========================================================
+   PANEL
+========================================================= */
+
+const settingsButton=
+    document.getElementById(
+        "settingsButton"
+    );
+
+const settingsPanel=
+    document.getElementById(
+        "settingsPanel"
+    );
+
+const speedSlider=
+    document.getElementById(
+        "speedSlider"
+    );
+
+const heartSizeSlider=
+    document.getElementById(
+        "heartSizeSlider"
+    );
+
+const rotationButton=
+    document.getElementById(
+        "rotationButton"
+    );
+
+const speedValue=
+    document.getElementById(
+        "speedValue"
+    );
+
+const heartSizeValue=
+    document.getElementById(
+        "heartSizeValue"
+    );
+
+const resetButton=
+    document.getElementById(
+        "resetButton"
+    );
+
+const starBrightnessSlider=
+    document.getElementById(
+        "starBrightnessSlider"
+    );
+
+const starBrightnessValue=
+    document.getElementById(
+        "starBrightnessValue"
+    );
+
+const heartColorValue=
+    document.getElementById(
+        "heartColorValue"
+    );
+
+const colorButtons=
+    document.querySelectorAll(
+        "[data-color]"
+    );
+
+
+/* =========================================================
+   ABRIR PANEL
+========================================================= */
+
+settingsButton.addEventListener(
+    "click",
+    ()=>{
+        settingsPanel.classList.toggle(
+            "show"
+        );
+    }
+);
+
+
+/* =========================================================
+   VELOCIDAD
+========================================================= */
+
+function updateSpeedLabel(){
+
+    const labels=[
+
+        "Muy lenta",
+
+        "Lenta",
+
+        "Normal",
+
+        "Rápida"
+    ];
+
+
+    speedValue.textContent=
+        labels[
+            settings.orbitSpeed
+        ];
+}
+
+
+speedSlider.addEventListener(
+    "input",
+    ()=>{
+
+        settings.orbitSpeed=
+            Number(
+                speedSlider.value
+            );
+
+        updateSpeedLabel();
+    }
+);
+
+
+/* =========================================================
+   TAMAÑO DEL CORAZON
+========================================================= */
+
+function updateHeartSizeLabel(){
+
+    const value=
+        settings.heartSize;
+
+
+    if(value<.9){
+
+        heartSizeValue.textContent=
+            "Pequeño";
+
+    }else if(value>1.15){
+
+        heartSizeValue.textContent=
+            "Grande";
+
+    }else{
+
+        heartSizeValue.textContent=
+            "Normal";
+    }
+}
+
+
+heartSizeSlider.addEventListener(
+    "input",
+    ()=>{
+
+        settings.heartSize=
+            Number(
+                heartSizeSlider.value
+            );
+
+        createCentralHeart();
+
+        updateHeartSizeLabel();
+    }
+);
+
+
+/* =========================================================
+   COLOR DE CORAZONES
+========================================================= */
+
+const colorNames={
+
+    pink:"Rosa",
+
+    red:"Rojo",
+
+    yellow:"Amarillo",
+
+    white:"Blanco"
+};
+
+
+colorButtons.forEach(
+    button=>{
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+                const color=
+                    button.dataset.color;
+
+
+                settings.heartColor=
+                    color;
+
+
+                colorButtons.forEach(
+                    item=>{
+
+                        item.classList.toggle(
+                            "active",
+                            item.dataset.color===
+                            color
+                        );
+                    }
+                );
+
+
+                heartColorValue.textContent=
+                    colorNames[color];
+            }
+        );
+    }
+);
+
+
+/* =========================================================
+   BRILLO ESTRELLAS
+========================================================= */
+
+function updateStarBrightnessLabel(){
+
+    const value=
+        settings.starBrightness;
+
+
+    if(value<.75){
+
+        starBrightnessValue.textContent=
+            "Bajo";
+
+    }else if(value<1.2){
+
+        starBrightnessValue.textContent=
+            "Normal";
+
+    }else if(value<1.65){
+
+        starBrightnessValue.textContent=
+            "Alto";
+
+    }else{
+
+        starBrightnessValue.textContent=
+            "Muy alto";
+    }
+}
+
+
+starBrightnessSlider.addEventListener(
+    "input",
+    ()=>{
+
+        settings.starBrightness=
+            Number(
+                starBrightnessSlider.value
+            );
+
+        updateStarBrightnessLabel();
+    }
+);
+
+
+/* =========================================================
+   ROTACION AUTOMATICA
+========================================================= */
+
+function updateRotationButton(){
+
+    if(settings.autoRotation){
+
+        rotationButton.textContent=
+            "🔄 Rotación automática: ON";
+
+        rotationButton.classList.add(
+            "on"
+        );
+
+    }else{
+
+        rotationButton.textContent=
+            "⏸️ Rotación automática: OFF";
+
+        rotationButton.classList.remove(
+            "on"
+        );
+    }
+}
+
+
+rotationButton.addEventListener(
+    "click",
+    ()=>{
+
+        settings.autoRotation=
+            !settings.autoRotation;
+
+        updateRotationButton();
+    }
+);
+
+
+/* =========================================================
+   RESTAURAR
+========================================================= */
+
+resetButton.addEventListener(
+    "click",
+    ()=>{
+
+        settings.orbitSpeed=2;
+
+        settings.heartSize=1;
+
+        settings.autoRotation=true;
+
+        settings.heartColor="pink";
+
+        settings.starBrightness=1;
+
+
+        speedSlider.value=2;
+
+        heartSizeSlider.value=1;
+
+        starBrightnessSlider.value=1;
+
+
+        colorButtons.forEach(
+            button=>{
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.color===
+                    "pink"
+                );
+            }
+        );
+
+
+        createCentralHeart();
+
+        updateSpeedLabel();
+
+        updateHeartSizeLabel();
+
+        updateStarBrightnessLabel();
+
+        updateRotationButton();
+
+        heartColorValue.textContent=
+            "Rosa";
+    }
+);
+
+
+/* =========================================================
+   VALORES INICIALES
+========================================================= */
+
+updateSpeedLabel();
+
+updateHeartSizeLabel();
+
+updateStarBrightnessLabel();
+
+updateRotationButton();
+
+
+/* =========================================================
    ANIMACION
 ========================================================= */
 
@@ -1879,11 +2783,12 @@ function animate(time){
         )*.06;
 
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha=1;
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         "#010006";
+
 
     ctx.fillRect(
         0,
