@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
-      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
 <title>Mi Mere ❤️</title>
 
 <style>
@@ -13,22 +18,36 @@
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#010006;
-    font-family:Arial,Helvetica,sans-serif;
 
-    /*
-       Evita gestos del navegador sobre la página.
-    */
+    background:#010006;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     touch-action:none;
     overscroll-behavior:none;
 }
 
+body{
+    position:fixed;
+    inset:0;
+}
+
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
 canvas{
     position:fixed;
+
     inset:0;
 
     width:100%;
@@ -38,14 +57,17 @@ canvas{
 
     cursor:grab;
 
-    /*
-       IMPORTANTE PARA CELULAR
-    */
     touch-action:none;
+
+    -ms-touch-action:none;
 
     user-select:none;
     -webkit-user-select:none;
+
     -webkit-touch-callout:none;
+
+    -webkit-tap-highlight-color:
+        transparent;
 }
 
 canvas.dragging{
@@ -63,7 +85,8 @@ canvas.dragging{
     top:22px;
     left:50%;
 
-    transform:translateX(-50%);
+    transform:
+        translateX(-50%);
 
     z-index:5;
 
@@ -97,7 +120,7 @@ canvas.dragging{
     right:22px;
     bottom:22px;
 
-    z-index:30;
+    z-index:50;
 
     display:flex;
 
@@ -124,8 +147,10 @@ canvas.dragging{
     cursor:pointer;
 
     backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
 
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 
     box-shadow:
         0 0 12px
@@ -164,13 +189,19 @@ canvas.dragging{
     0%,100%{
         box-shadow:
             0 0 12px
-            rgba(255,50,150,.35);
+            rgba(255,50,150,.35),
+
+            inset 0 0 12px
+            rgba(255,50,150,.10);
     }
 
     50%{
         box-shadow:
             0 0 25px
-            rgba(255,50,150,.75);
+            rgba(255,50,150,.75),
+
+            inset 0 0 16px
+            rgba(255,50,150,.20);
     }
 }
 
@@ -187,9 +218,14 @@ canvas.dragging{
 
     width:285px;
 
+    max-height:
+        calc(100vh - 110px);
+
+    overflow-y:auto;
+
     padding:18px;
 
-    z-index:29;
+    z-index:49;
 
     background:
         rgba(10,3,18,.90);
@@ -201,7 +237,6 @@ canvas.dragging{
     border-radius:18px;
 
     backdrop-filter:blur(14px);
-
     -webkit-backdrop-filter:blur(14px);
 
     box-shadow:
@@ -338,7 +373,7 @@ input[type="range"]::-moz-range-thumb{
 
 
 /* =========================================================
-   BOTONES DE COLOR
+   COLORES
 ========================================================= */
 
 .optionButtons{
@@ -369,7 +404,8 @@ input[type="range"]::-moz-range-thumb{
 
     font-size:11px;
 
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 
     transition:
         background .2s ease,
@@ -419,7 +455,8 @@ input[type="range"]::-moz-range-thumb{
 
     font-size:12px;
 
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 
     transition:
         background .2s ease,
@@ -465,12 +502,14 @@ input[type="range"]::-moz-range-thumb{
 
     font-size:11px;
 
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 }
 </style>
 </head>
 
 <body>
+
 
 <div class="title">
     Para mi Mere ❤️
@@ -490,7 +529,7 @@ input[type="range"]::-moz-range-thumb{
 
 
 <!-- =====================================================
-     PANEL
+     PANEL DE CONFIGURACION
 ===================================================== -->
 
 <div id="settingsPanel">
@@ -499,6 +538,8 @@ input[type="range"]::-moz-range-thumb{
         ⚙️ Configuración
     </div>
 
+
+    <!-- VELOCIDAD -->
 
     <div class="setting">
 
@@ -526,6 +567,8 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
+    <!-- TAMAÑO -->
+
     <div class="setting">
 
         <div class="settingLabel">
@@ -551,6 +594,8 @@ input[type="range"]::-moz-range-thumb{
             value="0.75">
     </div>
 
+
+    <!-- COLOR -->
 
     <div class="setting">
 
@@ -599,6 +644,8 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
+    <!-- ESTRELLAS -->
+
     <div class="setting">
 
         <div class="settingLabel">
@@ -625,6 +672,8 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
+    <!-- ROTACION -->
+
     <div class="setting">
 
         <div class="settingLabel">
@@ -646,6 +695,8 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
+    <!-- RESTAURAR -->
+
     <button
         id="resetButton"
         class="resetButton">
@@ -658,7 +709,7 @@ input[type="range"]::-moz-range-thumb{
 
 
 <!-- =====================================================
-     BOTONES
+     CONTROLES
 ===================================================== -->
 
 <div class="controls">
@@ -671,6 +722,7 @@ input[type="range"]::-moz-range-thumb{
         ♫
 
     </button>
+
 
     <button
         id="settingsButton"
@@ -718,7 +770,7 @@ const settings = {
 
     orbitSpeed:2,
 
-    heartSize:0.75,
+    heartSize:.75,
 
     autoRotation:true,
 
@@ -764,7 +816,7 @@ const camera = {
 
     yaw:0,
 
-    pitch:0.12,
+    pitch:.12,
 
     distance:1,
 
@@ -773,7 +825,7 @@ const camera = {
 
 
 /* =========================================================
-   INTERACCION PC + MOVIL
+   ESTADO DE INTERACCION
 ========================================================= */
 
 let dragging = false;
@@ -781,10 +833,14 @@ let dragging = false;
 let lastX = 0;
 let lastY = 0;
 
+let activePointerId = null;
 
-/*
-   Estado del pinch zoom.
-*/
+let touchDragging = false;
+
+
+/* =========================================================
+   PINCH ZOOM
+========================================================= */
 
 let pinchActive = false;
 
@@ -794,18 +850,21 @@ let pinchStartCameraDistance = 1;
 
 
 /* =========================================================
-   DISTANCIA ENTRE DOS DEDOS
+   DISTANCIA ENTRE DEDOS
 ========================================================= */
 
-function getTouchDistance(touchA,touchB){
+function getTouchDistance(
+    a,
+    b
+){
 
     const dx =
-        touchB.clientX -
-        touchA.clientX;
+        b.clientX -
+        a.clientX;
 
     const dy =
-        touchB.clientY -
-        touchA.clientY;
+        b.clientY -
+        a.clientY;
 
     return Math.sqrt(
         dx*dx +
@@ -815,48 +874,86 @@ function getTouchDistance(touchA,touchB){
 
 
 /* =========================================================
-   MOUSE - PC
+   MOVER CAMARA
+========================================================= */
+
+function moveCamera(
+    x,
+    y
+){
+
+    const dx =
+        x-lastX;
+
+    const dy =
+        y-lastY;
+
+
+    lastX = x;
+    lastY = y;
+
+
+    camera.yaw -=
+        dx*.008;
+
+
+    camera.pitch -=
+        dy*.006;
+
+
+    camera.pitch =
+        Math.max(
+            -1.35,
+            Math.min(
+                1.35,
+                camera.pitch
+            )
+        );
+}
+
+
+/* =========================================================
+   POINTER DOWN
 ========================================================= */
 
 canvas.addEventListener(
-    "mousedown",
+    "pointerdown",
     e => {
 
         /*
-           Solo botón izquierdo.
+           Mouse:
+           solamente botón izquierdo.
         */
 
-        if(e.button !== 0)
+        if(
+            e.pointerType === "mouse" &&
+            e.button !== 0
+        ){
             return;
+        }
+
+
+        e.preventDefault();
+
+
+        /*
+           Si ya estamos usando
+           un puntero, ignoramos otros.
+        */
+
+        if(
+            activePointerId !== null
+        ){
+
+            return;
+        }
+
 
         dragging = true;
 
-        pinchActive = false;
+        activePointerId =
+            e.pointerId;
 
-        lastX = e.clientX;
-        lastY = e.clientY;
-
-        canvas.classList.add(
-            "dragging"
-        );
-    }
-);
-
-
-window.addEventListener(
-    "mousemove",
-    e => {
-
-        if(!dragging)
-            return;
-
-        const dx =
-            e.clientX -
-            lastX;
-
-        const dy =
-            e.clientY -
-            lastY;
 
         lastX =
             e.clientX;
@@ -865,64 +962,127 @@ window.addEventListener(
             e.clientY;
 
 
-        camera.yaw -=
-            dx * 0.008;
-
-
-        camera.pitch -=
-            dy * 0.006;
-
-
-        camera.pitch =
-            Math.max(
-                -1.35,
-                Math.min(
-                    1.35,
-                    camera.pitch
-                )
-            );
-    }
-);
-
-
-window.addEventListener(
-    "mouseup",
-    () => {
-
-        dragging = false;
-
-        canvas.classList.remove(
+        canvas.classList.add(
             "dragging"
         );
+
+
+        try{
+
+            canvas.setPointerCapture(
+                e.pointerId
+            );
+
+        }catch(error){}
+    },
+    {
+        passive:false
     }
 );
 
 
 /* =========================================================
-   TOUCH - MOVIMIENTO CON 1 DEDO
+   POINTER MOVE
+========================================================= */
+
+canvas.addEventListener(
+    "pointermove",
+    e => {
+
+        if(
+            !dragging ||
+            activePointerId !==
+            e.pointerId
+        ){
+
+            return;
+        }
+
+
+        e.preventDefault();
+
+
+        moveCamera(
+            e.clientX,
+            e.clientY
+        );
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   STOP POINTER
+========================================================= */
+
+function stopPointer(e){
+
+    if(
+        activePointerId !== null &&
+        e.pointerId !==
+        activePointerId
+    ){
+
+        return;
+    }
+
+
+    dragging = false;
+
+    activePointerId = null;
+
+
+    canvas.classList.remove(
+        "dragging"
+    );
+
+
+    try{
+
+        canvas.releasePointerCapture(
+            e.pointerId
+        );
+
+    }catch(error){}
+}
+
+
+canvas.addEventListener(
+    "pointerup",
+    stopPointer
+);
+
+canvas.addEventListener(
+    "pointercancel",
+    stopPointer
+);
+
+
+/* =========================================================
+   TOUCH START - RESPALDO
 ========================================================= */
 
 canvas.addEventListener(
     "touchstart",
     e => {
 
-        /*
-           Evitamos que el navegador
-           interprete el gesto.
-        */
-
         e.preventDefault();
 
 
         /*
-           UN DEDO = MOVER CAMARA
+           Un dedo = movimiento.
         */
 
-        if(e.touches.length === 1){
+        if(
+            e.touches.length === 1
+        ){
+
+            touchDragging = true;
 
             pinchActive = false;
 
-            dragging = true;
 
             lastX =
                 e.touches[0].clientX;
@@ -930,25 +1090,32 @@ canvas.addEventListener(
             lastY =
                 e.touches[0].clientY;
 
+
             return;
         }
 
 
         /*
-           DOS DEDOS = PINCH ZOOM
+           Dos dedos = zoom.
         */
 
-        if(e.touches.length >= 2){
+        if(
+            e.touches.length >= 2
+        ){
+
+            touchDragging = false;
 
             dragging = false;
 
             pinchActive = true;
+
 
             pinchStartDistance =
                 getTouchDistance(
                     e.touches[0],
                     e.touches[1]
                 );
+
 
             pinchStartCameraDistance =
                 camera.targetDistance;
@@ -962,7 +1129,7 @@ canvas.addEventListener(
 
 
 /* =========================================================
-   TOUCH MOVE
+   TOUCH MOVE - RESPALDO
 ========================================================= */
 
 canvas.addEventListener(
@@ -973,10 +1140,7 @@ canvas.addEventListener(
 
 
         /*
-           -------------------------------------
-           DOS DEDOS
            PINCH ZOOM
-           -------------------------------------
         */
 
         if(
@@ -995,11 +1159,6 @@ canvas.addEventListener(
                 pinchStartDistance > 0
             ){
 
-                /*
-                   Cuanto más separas los dedos,
-                   más cerca hacemos la cámara.
-                */
-
                 const ratio =
                     pinchStartDistance /
                     currentDistance;
@@ -1012,7 +1171,7 @@ canvas.addEventListener(
 
                 newDistance =
                     Math.max(
-                        0.38,
+                        .38,
                         Math.min(
                             2.7,
                             newDistance
@@ -1030,15 +1189,12 @@ canvas.addEventListener(
 
 
         /*
-           -------------------------------------
            UN DEDO
-           GIRO 360°
-           -------------------------------------
         */
 
         if(
             e.touches.length === 1 &&
-            dragging
+            touchDragging
         ){
 
             const x =
@@ -1048,33 +1204,10 @@ canvas.addEventListener(
                 e.touches[0].clientY;
 
 
-            const dx =
-                x-lastX;
-
-            const dy =
-                y-lastY;
-
-
-            lastX = x;
-            lastY = y;
-
-
-            camera.yaw -=
-                dx * 0.008;
-
-
-            camera.pitch -=
-                dy * 0.006;
-
-
-            camera.pitch =
-                Math.max(
-                    -1.35,
-                    Math.min(
-                        1.35,
-                        camera.pitch
-                    )
-                );
+            moveCamera(
+                x,
+                y
+            );
         }
 
     },
@@ -1096,15 +1229,18 @@ canvas.addEventListener(
 
 
         /*
-           Si queda un dedo después del
-           pinch, continuamos como movimiento.
+           Si queda un dedo después
+           del pinch, retomamos movimiento.
         */
 
-        if(e.touches.length === 1){
+        if(
+            e.touches.length === 1
+        ){
 
             pinchActive = false;
 
-            dragging = true;
+            touchDragging = true;
+
 
             lastX =
                 e.touches[0].clientX;
@@ -1112,11 +1248,12 @@ canvas.addEventListener(
             lastY =
                 e.touches[0].clientY;
 
+
             return;
         }
 
 
-        dragging = false;
+        touchDragging = false;
 
         pinchActive = false;
 
@@ -1129,9 +1266,9 @@ canvas.addEventListener(
 
 canvas.addEventListener(
     "touchcancel",
-    e => {
+    () => {
 
-        dragging = false;
+        touchDragging = false;
 
         pinchActive = false;
 
@@ -1143,7 +1280,7 @@ canvas.addEventListener(
 
 
 /* =========================================================
-   ZOOM CON RUEDA - PC
+   ZOOM PC
 ========================================================= */
 
 canvas.addEventListener(
@@ -1152,13 +1289,14 @@ canvas.addEventListener(
 
         e.preventDefault();
 
+
         camera.targetDistance +=
-            e.deltaY * 0.0012;
+            e.deltaY*.0012;
 
 
         camera.targetDistance =
             Math.max(
-                0.38,
+                .38,
                 Math.min(
                     2.7,
                     camera.targetDistance
@@ -1193,17 +1331,17 @@ function resize(){
 
 
     canvas.width =
-        W * DPR;
+        W*DPR;
 
     canvas.height =
-        H * DPR;
+        H*DPR;
 
 
     canvas.style.width =
-        W + "px";
+        W+"px";
 
     canvas.style.height =
-        H + "px";
+        H+"px";
 
 
     ctx.setTransform(
@@ -1233,7 +1371,7 @@ window.addEventListener(
 
 
 /* =========================================================
-   FORMA DEL CORAZON
+   FORMA CORAZON
 ========================================================= */
 
 function heartPoint(
@@ -1242,7 +1380,7 @@ function heartPoint(
 ){
 
     const x =
-        16 *
+        16*
         Math.pow(
             Math.sin(t),
             3
@@ -1250,25 +1388,25 @@ function heartPoint(
 
 
     const y =
-        13 * Math.cos(t)
-        -5 * Math.cos(2*t)
-        -2 * Math.cos(3*t)
+        13*Math.cos(t)
+        -5*Math.cos(2*t)
+        -2*Math.cos(3*t)
         -Math.cos(4*t);
 
 
-    return {
+    return{
 
         x:
-            x * scale,
+            x*scale,
 
         y:
-            -y * scale
+            -y*scale
     };
 }
 
 
 /* =========================================================
-   PARTICULAS
+   PARTICULAS DE CORAZON
 ========================================================= */
 
 function createHeartParticles(
@@ -1287,8 +1425,8 @@ function createHeartParticles(
     ){
 
         const t =
-            Math.random() *
-            Math.PI * 2;
+            Math.random()*
+            Math.PI*2;
 
 
         const p =
@@ -1300,61 +1438,56 @@ function createHeartParticles(
 
         const p2 =
             heartPoint(
-                t + 0.015,
+                t+.015,
                 scale
             );
 
 
         const dx =
-            p2.x - p.x;
-
+            p2.x-p.x;
 
         const dy =
-            p2.y - p.y;
+            p2.y-p.y;
 
 
         const len =
             Math.sqrt(
-                dx*dx +
+                dx*dx+
                 dy*dy
-            ) || 1;
+            )||1;
 
 
         const nx =
-            -dy / len;
-
+            -dy/len;
 
         const ny =
-            dx / len;
+            dx/len;
 
 
         const thickness =
             (
-                Math.random() - 0.5
-            ) *
-            scale *
-            0.72;
+                Math.random()-.5
+            )*
+            scale*.72;
 
 
-        particles[i] = {
+        particles[i]={
 
             x:
-                p.x +
-                nx * thickness,
+                p.x+
+                nx*thickness,
 
             y:
-                p.y +
-                ny * thickness,
+                p.y+
+                ny*thickness,
 
             size:
-                Math.random() *
-                0.70 +
-                0.30,
+                Math.random()*.70+
+                .30,
 
             alpha:
-                Math.random() *
-                0.55 +
-                0.35
+                Math.random()*.55+
+                .35
         };
     }
 
@@ -1364,10 +1497,10 @@ function createHeartParticles(
 
 
 /* =========================================================
-   PARTICULAS DE COLOR
+   PARTICULAS COLOR
 ========================================================= */
 
-const accentColors = [
+const accentColors=[
 
     "rgba(80,180,255,.80)",
 
@@ -1386,7 +1519,7 @@ function createAccentParticles(
     amount
 ){
 
-    const particles =
+    const particles=
         new Array(amount);
 
 
@@ -1396,47 +1529,43 @@ function createAccentParticles(
         i++
     ){
 
-        const angle =
-            Math.random() *
-            Math.PI * 2;
+        const angle=
+            Math.random()*
+            Math.PI*2;
 
 
-        const distance =
-            radius *
+        const distance=
+            radius*
             (
-                .35 +
-                Math.random() *
-                .65
+                .35+
+                Math.random()*.65
             );
 
 
-        particles[i] = {
+        particles[i]={
 
             x:
-                Math.cos(angle) *
+                Math.cos(angle)*
                 distance,
 
             y:
-                Math.sin(angle) *
-                distance *
-                .62,
+                Math.sin(angle)*
+                distance*.62,
 
             size:
-                Math.random() *
-                1.25 +
+                Math.random()*1.25+
                 .45,
 
             color:
                 accentColors[
                     Math.floor(
-                        Math.random() *
+                        Math.random()*
                         accentColors.length
                     )
                 ],
 
             alpha:
-                Math.random() *
-                .35 +
+                Math.random()*.35+
                 .30
         };
     }
@@ -1450,7 +1579,7 @@ function createAccentParticles(
    CORAZON CENTRAL
 ========================================================= */
 
-const centralHeart = {
+const centralHeart={
 
     particles:[],
 
@@ -1462,27 +1591,27 @@ const centralHeart = {
 
 function createCentralHeart(){
 
-    const scale =
-        Math.min(W,H) *
-        .014 *
+    const scale=
+        Math.min(W,H)*
+        .014*
         settings.heartSize;
 
 
-    centralHeart.scale =
+    centralHeart.scale=
         scale;
 
 
-    centralHeart.particles =
+    centralHeart.particles=
         createHeartParticles(
             scale,
             1000
         );
 
 
-    centralHeart.accentParticles =
+    centralHeart.accentParticles=
         createAccentParticles(
-            Math.min(W,H) *
-            .035 *
+            Math.min(W,H)*
+            .035*
             settings.heartSize,
 
             65
@@ -1494,25 +1623,23 @@ function createCentralHeart(){
    17 CORAZONES
 ========================================================= */
 
-const orbitHearts = [];
+const orbitHearts=[];
 
 
 function createHearts(){
 
-    orbitHearts.length = 0;
+    orbitHearts.length=0;
 
 
-    const count = 17;
+    const count=17;
 
 
-    const radius =
-        Math.min(W,H) *
-        .34;
+    const radius=
+        Math.min(W,H)*.34;
 
 
-    const smallScale =
-        Math.min(W,H) *
-        .0048;
+    const smallScale=
+        Math.min(W,H)*.0048;
 
 
     for(
@@ -1524,12 +1651,11 @@ function createHearts(){
         orbitHearts.push({
 
             angle:
-                Math.PI *
-                2/count *
+                Math.PI*
+                2/count*
                 i,
 
             radius,
-
 
             particles:
                 createHeartParticles(
@@ -1537,12 +1663,9 @@ function createHearts(){
                     330
                 ),
 
-
             accentParticles:
                 createAccentParticles(
-                    Math.min(W,H) *
-                    .010,
-
+                    Math.min(W,H)*.010,
                     18
                 )
         });
@@ -1554,7 +1677,7 @@ function createHearts(){
    FRASES
 ========================================================= */
 
-const loveWords = [
+const loveWords=[
 
     "Mi princesa ❤️",
     "Mi niña 🥰",
@@ -1599,43 +1722,39 @@ const loveWords = [
 ];
 
 
-const loveTexts = [];
+const loveTexts=[];
 
 
 function createLoveTexts(){
 
-    loveTexts.length = 0;
+    loveTexts.length=0;
 
 
-    const base =
+    const base=
         Math.min(W,H);
 
 
     loveWords.forEach(
-        text => {
+        text=>{
 
-            const radius =
-                base *
+            const radius=
+                base*
                 (
-                    .42 +
-                    Math.random() *
-                    .58
+                    .42+
+                    Math.random()*.58
                 );
 
 
-            const y =
+            const y=
                 (
-                    Math.random() -
-                    .5
-                ) *
-                base *
-                .60;
+                    Math.random()-.5
+                )*
+                base*.60;
 
 
-            const speed =
-                .00008 +
-                Math.random() *
-                .00024;
+            const speed=
+                .00008+
+                Math.random()*.00024;
 
 
             loveTexts.push({
@@ -1643,8 +1762,8 @@ function createLoveTexts(){
                 text,
 
                 angle:
-                    Math.random() *
-                    Math.PI * 2,
+                    Math.random()*
+                    Math.PI*2,
 
                 radius,
 
@@ -1661,15 +1780,15 @@ function createLoveTexts(){
    ESTRELLAS
 ========================================================= */
 
-let stars = [];
+let stars=[];
 
 
 function createStars(){
 
-    stars.length = 0;
+    stars.length=0;
 
 
-    const amount =
+    const amount=
         Math.max(
             600,
             Math.floor(
@@ -1684,23 +1803,22 @@ function createStars(){
         i++
     ){
 
-        const theta =
-            Math.random() *
-            Math.PI * 2;
+        const theta=
+            Math.random()*
+            Math.PI*2;
 
 
-        const phi =
+        const phi=
             Math.acos(
-                2*Math.random() - 1
+                2*Math.random()-1
             );
 
 
-        const radius =
-            Math.min(W,H) *
+        const radius=
+            Math.min(W,H)*
             (
-                .25 +
-                Math.random() *
-                1.6
+                .25+
+                Math.random()*1.6
             );
 
 
@@ -1713,18 +1831,15 @@ function createStars(){
             radius,
 
             size:
-                Math.random() *
-                2.4 +
+                Math.random()*2.4+
                 .7,
 
             alpha:
-                Math.random() *
-                .65 +
+                Math.random()*.65+
                 .3,
 
             twinkle:
-                Math.random() *
-                6.283
+                Math.random()*6.283
         });
     }
 }
@@ -1740,81 +1855,70 @@ function project3D(
     z
 ){
 
-    const cy =
-        Math.cos(
-            camera.yaw
-        );
+    const cy=
+        Math.cos(camera.yaw);
 
-    const sy =
-        Math.sin(
-            camera.yaw
-        );
+    const sy=
+        Math.sin(camera.yaw);
 
 
-    let rx =
-        x*cy -
+    let rx=
+        x*cy-
         z*sy;
 
 
-    let rz =
-        x*sy +
+    let rz=
+        x*sy+
         z*cy;
 
 
-    const cp =
-        Math.cos(
-            camera.pitch
-        );
+    const cp=
+        Math.cos(camera.pitch);
 
-    const sp =
-        Math.sin(
-            camera.pitch
-        );
+    const sp=
+        Math.sin(camera.pitch);
 
 
-    let ry =
-        y*cp -
+    let ry=
+        y*cp-
         rz*sp;
 
 
-    rz =
-        y*sp +
+    rz=
+        y*sp+
         rz*cp;
 
 
-    rz -=
-        camera.distance *
-        Math.min(W,H) *
-        .7;
+    rz-=
+        camera.distance*
+        Math.min(W,H)*.7;
 
 
-    const focal =
-        Math.min(W,H) *
-        .75;
+    const focal=
+        Math.min(W,H)*.75;
 
 
-    const scale =
-        focal /
+    const scale=
+        focal/
         Math.max(
             1,
             -rz
         );
 
 
-    return {
+    return{
 
         x:
-            W/2 +
+            W/2+
             rx*scale,
 
         y:
-            H/2 +
+            H/2+
             ry*scale,
 
         scale,
 
-        depth:
-            rz
+        depth:rz
     };
 }
 
@@ -1825,29 +1929,20 @@ function project3D(
 
 function drawStars(time){
 
-    const cosYaw =
-        Math.cos(
-            camera.yaw
-        );
+    const cosYaw=
+        Math.cos(camera.yaw);
 
-    const sinYaw =
-        Math.sin(
-            camera.yaw
-        );
+    const sinYaw=
+        Math.sin(camera.yaw);
 
+    const cosPitch=
+        Math.cos(camera.pitch);
 
-    const cosPitch =
-        Math.cos(
-            camera.pitch
-        );
-
-    const sinPitch =
-        Math.sin(
-            camera.pitch
-        );
+    const sinPitch=
+        Math.sin(camera.pitch);
 
 
-    const galaxyTime =
+    const galaxyTime=
         settings.autoRotation
             ? time
             : 0;
@@ -1857,132 +1952,125 @@ function drawStars(time){
         const star of stars
     ){
 
-        const theta =
-            star.theta +
-            galaxyTime *
-            .000045;
+        const theta=
+            star.theta+
+            galaxyTime*.000045;
 
 
-        const sinPhi =
-            Math.sin(
-                star.phi
-            );
+        const sinPhi=
+            Math.sin(star.phi);
 
-
-        const cosTheta =
+        const cosTheta=
             Math.cos(theta);
 
-        const sinTheta =
+        const sinTheta=
             Math.sin(theta);
 
 
-        let x =
-            sinPhi *
-            cosTheta *
+        let x=
+            sinPhi*
+            cosTheta*
             star.radius;
 
 
-        let y =
+        let y=
             Math.cos(
                 star.phi
-            ) *
+            )*
             star.radius;
 
 
-        let z =
-            sinPhi *
-            sinTheta *
+        let z=
+            sinPhi*
+            sinTheta*
             star.radius;
 
 
-        const rx =
-            x*cosYaw -
+        const rx=
+            x*cosYaw-
             z*sinYaw;
 
 
-        let rz =
-            x*sinYaw +
+        let rz=
+            x*sinYaw+
             z*cosYaw;
 
 
-        const ry =
-            y*cosPitch -
+        const ry=
+            y*cosPitch-
             rz*sinPitch;
 
 
-        rz =
-            y*sinPitch +
+        rz=
+            y*sinPitch+
             rz*cosPitch;
 
 
-        rz -=
-            camera.distance *
-            Math.min(W,H) *
-            .7;
+        rz-=
+            camera.distance*
+            Math.min(W,H)*.7;
 
 
-        const scale =
-            Math.min(W,H) *
-            .75 /
+        const scale=
+            Math.min(W,H)*
+            .75/
             Math.max(
                 1,
                 -rz
             );
 
 
-        const px =
-            W/2 +
+        const px=
+            W/2+
             rx*scale;
 
 
-        const py =
-            H/2 +
+        const py=
+            H/2+
             ry*scale;
 
 
         if(
-            px < -10 ||
-            px > W+10 ||
-            py < -10 ||
-            py > H+10
+            px<-10||
+            px>W+10||
+            py<-10||
+            py>H+10
         ){
-
             continue;
         }
 
 
-        const twinkle =
-            .75 +
+        const twinkle=
+            .75+
             Math.sin(
-                time*.002 +
+                time*.002+
                 star.twinkle
-            ) *
-            .25;
+            )*.25;
 
 
-        const brightness =
+        const brightness=
             settings.starBrightness;
 
 
-        const size =
+        const size=
             Math.max(
                 .6,
-                star.size *
-                scale *
-                1.8 *
+                star.size*
+                scale*
+                1.8*
                 Math.min(
                     1.25,
-                    .85 +
+                    .85+
                     brightness*.15
                 )
             );
 
 
-        ctx.globalAlpha =
+        ctx.globalAlpha=
             Math.min(
                 1,
-                star.alpha *
-                twinkle *
+                star.alpha*
+                twinkle*
                 brightness
             );
 
@@ -2001,23 +2089,22 @@ function drawStars(time){
         );
 
 
-        ctx.fillStyle =
+        ctx.fillStyle=
             "#ffffff";
 
 
         if(
-            brightness > 1.35 &&
-            size > 1.5
+            brightness>1.35 &&
+            size>1.5
         ){
 
-            ctx.shadowColor =
+            ctx.shadowColor=
                 "#ffffff";
 
-
-            ctx.shadowBlur =
+            ctx.shadowBlur=
                 Math.min(
                     7,
-                    size *
+                    size*
                     brightness
                 );
         }
@@ -2035,7 +2122,7 @@ function drawStars(time){
     }
 
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha=1;
 }
 
 
@@ -2045,13 +2132,13 @@ function drawStars(time){
 
 function drawGlow(){
 
-    const radius =
-        Math.min(W,H) *
-        .20 /
+    const radius=
+        Math.min(W,H)*
+        .20/
         camera.distance;
 
 
-    const gradient =
+    const gradient=
         ctx.createRadialGradient(
             W/2,
             H/2,
@@ -2081,7 +2168,7 @@ function drawGlow(){
     );
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         gradient;
 
 
@@ -2107,12 +2194,11 @@ function drawGlow(){
 
 function drawOrbit(){
 
-    const radius =
-        Math.min(W,H) *
-        .34;
+    const radius=
+        Math.min(W,H)*.34;
 
 
-    const points = 70;
+    const points=70;
 
 
     ctx.beginPath();
@@ -2124,45 +2210,41 @@ function drawOrbit(){
         i++
     ){
 
-        const a =
-            i / points *
+        const a=
+            i/points*
             Math.PI*2;
 
 
-        const p =
+        const p=
             project3D(
-                Math.cos(a) *
+                Math.cos(a)*
                 radius,
 
                 0,
 
-                Math.sin(a) *
+                Math.sin(a)*
                 radius
             );
 
 
-        if(i===0){
-
+        if(i===0)
             ctx.moveTo(
                 p.x,
                 p.y
             );
-
-        }else{
-
+        else
             ctx.lineTo(
                 p.x,
                 p.y
             );
-        }
     }
 
 
-    ctx.strokeStyle =
+    ctx.strokeStyle=
         "rgba(255,60,150,.08)";
 
 
-    ctx.lineWidth = 1;
+    ctx.lineWidth=1;
 
 
     ctx.stroke();
@@ -2179,11 +2261,11 @@ function drawHeartParticles(
     rotation
 ){
 
-    const scale =
+    const scale=
         position.scale;
 
 
-    const color =
+    const color=
         heartColors[
             settings.heartColor
         ];
@@ -2203,7 +2285,7 @@ function drawHeartParticles(
     );
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         color.fill;
 
 
@@ -2211,24 +2293,24 @@ function drawHeartParticles(
         const p of particles
     ){
 
-        const x =
-            p.x * scale;
+        const x=
+            p.x*scale;
 
 
-        const y =
-            p.y * scale;
+        const y=
+            p.y*scale;
 
 
-        const size =
+        const size=
             Math.max(
                 .25,
-                p.size *
-                scale *
+                p.size*
+                scale*
                 1.7
             );
 
 
-        ctx.globalAlpha =
+        ctx.globalAlpha=
             p.alpha;
 
 
@@ -2248,7 +2330,7 @@ function drawHeartParticles(
     }
 
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha=1;
 
 
     ctx.restore();
@@ -2256,7 +2338,7 @@ function drawHeartParticles(
 
 
 /* =========================================================
-   PARTICULAS DECORATIVAS
+   PARTICULAS DE COLOR
 ========================================================= */
 
 function drawAccentParticles(
@@ -2264,7 +2346,7 @@ function drawAccentParticles(
     position
 ){
 
-    const scale =
+    const scale=
         position.scale;
 
 
@@ -2281,18 +2363,19 @@ function drawAccentParticles(
         const p of particles
     ){
 
-        const size =
+        const size=
             Math.max(
                 .35,
-                p.size * scale
+                p.size*
+                scale
             );
 
 
-        ctx.globalAlpha =
+        ctx.globalAlpha=
             p.alpha;
 
 
-        ctx.fillStyle =
+        ctx.fillStyle=
             p.color;
 
 
@@ -2328,11 +2411,11 @@ function drawHeartText(
     position
 ){
 
-    const scale =
+    const scale=
         position.scale;
 
 
-    const size =
+    const size=
         Math.max(
             4.5,
             7*scale
@@ -2348,32 +2431,32 @@ function drawHeartText(
     );
 
 
-    ctx.textAlign =
+    ctx.textAlign=
         "center";
 
 
-    ctx.textBaseline =
+    ctx.textBaseline=
         "middle";
 
 
-    ctx.font =
+    ctx.font=
         `normal ${size}px "Meredith",
         "Segoe Script",
         "Brush Script MT",
         cursive`;
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         "#ffffff";
 
 
-    ctx.shadowColor =
+    ctx.shadowColor=
         heartColors[
             settings.heartColor
         ].shadow;
 
 
-    ctx.shadowBlur =
+    ctx.shadowBlur=
         Math.min(
             5,
             size*.35
@@ -2392,15 +2475,15 @@ function drawHeartText(
 
 
 /* =========================================================
-   17 CORAZONES ORBITALES
+   17 CORAZONES
 ========================================================= */
 
 function drawOrbitHearts(time){
 
-    const list = [];
+    const list=[];
 
 
-    let orbitTime =
+    let orbitTime=
         settings.autoRotation
             ? time
             : 0;
@@ -2410,108 +2493,98 @@ function drawOrbitHearts(time){
 
 
     if(
-        settings.orbitSpeed === 0
+        settings.orbitSpeed===0
     ){
 
-        speedMultiplier = .35;
+        speedMultiplier=.35;
 
     }else if(
-        settings.orbitSpeed === 1
+        settings.orbitSpeed===1
     ){
 
-        speedMultiplier = .70;
+        speedMultiplier=.70;
 
     }else if(
-        settings.orbitSpeed === 2
+        settings.orbitSpeed===2
     ){
 
-        speedMultiplier = 1;
+        speedMultiplier=1;
 
     }else{
 
-        speedMultiplier = 2;
+        speedMultiplier=2;
     }
 
 
-    const orbitSpeed =
-        orbitTime *
-        .00035 *
+    const orbitSpeed=
+        orbitTime*
+        .00035*
         speedMultiplier;
 
 
-    const cosYaw =
-        Math.cos(
-            camera.yaw
-        );
+    const cosYaw=
+        Math.cos(camera.yaw);
 
-    const sinYaw =
-        Math.sin(
-            camera.yaw
-        );
+    const sinYaw=
+        Math.sin(camera.yaw);
 
+    const cosPitch=
+        Math.cos(camera.pitch);
 
-    const cosPitch =
-        Math.cos(
-            camera.pitch
-        );
-
-    const sinPitch =
-        Math.sin(
-            camera.pitch
-        );
+    const sinPitch=
+        Math.sin(camera.pitch);
 
 
     for(
         const heart of orbitHearts
     ){
 
-        const angle =
-            heart.angle +
+        const angle=
+            heart.angle+
             orbitSpeed;
 
 
-        const x =
-            Math.cos(angle) *
+        const x=
+            Math.cos(angle)*
             heart.radius;
 
 
-        const y = 0;
+        const y=0;
 
 
-        const z =
-            Math.sin(angle) *
+        const z=
+            Math.sin(angle)*
             heart.radius;
 
 
-        const rx =
-            x*cosYaw -
+        const rx=
+            x*cosYaw-
             z*sinYaw;
 
 
-        let rz =
-            x*sinYaw +
+        let rz=
+            x*sinYaw+
             z*cosYaw;
 
 
-        const ry =
-            y*cosPitch -
+        const ry=
+            y*cosPitch-
             rz*sinPitch;
 
 
-        rz =
-            y*sinPitch +
+        rz=
+            y*sinPitch+
             rz*cosPitch;
 
 
-        rz -=
-            camera.distance *
-            Math.min(W,H) *
-            .7;
+        rz-=
+            camera.distance*
+            Math.min(W,H)*.7;
 
 
-        const scale =
-            Math.min(W,H) *
-            .75 /
+        const scale=
+            Math.min(W,H)*
+            .75/
             Math.max(
                 1,
                 -rz
@@ -2527,11 +2600,11 @@ function drawOrbitHearts(time){
             position:{
 
                 x:
-                    W/2 +
+                    W/2+
                     rx*scale,
 
                 y:
-                    H/2 +
+                    H/2+
                     ry*scale,
 
                 scale
@@ -2542,8 +2615,7 @@ function drawOrbitHearts(time){
 
     list.sort(
         (a,b)=>
-            b.depth -
-            a.depth
+            b.depth-a.depth
     );
 
 
@@ -2581,29 +2653,20 @@ function drawLoveTexts(time){
     const list=[];
 
 
-    const cosYaw =
-        Math.cos(
-            camera.yaw
-        );
+    const cosYaw=
+        Math.cos(camera.yaw);
 
-    const sinYaw =
-        Math.sin(
-            camera.yaw
-        );
+    const sinYaw=
+        Math.sin(camera.yaw);
 
+    const cosPitch=
+        Math.cos(camera.pitch);
 
-    const cosPitch =
-        Math.cos(
-            camera.pitch
-        );
-
-    const sinPitch =
-        Math.sin(
-            camera.pitch
-        );
+    const sinPitch=
+        Math.sin(camera.pitch);
 
 
-    const textTime =
+    const textTime=
         settings.autoRotation
             ? time
             : 0;
@@ -2613,69 +2676,68 @@ function drawLoveTexts(time){
         const item of loveTexts
     ){
 
-        const angle =
-            item.angle +
-            textTime *
+        const angle=
+            item.angle+
+            textTime*
             item.speed;
 
 
-        const x =
-            Math.cos(angle) *
+        const x=
+            Math.cos(angle)*
             item.radius;
 
 
-        const y =
+        const y=
             item.y;
 
 
-        const z =
-            Math.sin(angle) *
+        const z=
+            Math.sin(angle)*
             item.radius;
 
 
-        const rx =
-            x*cosYaw -
+        const rx=
+            x*cosYaw-
             z*sinYaw;
 
 
-        let rz =
-            x*sinYaw +
+        let rz=
+            x*sinYaw+
             z*cosYaw;
 
 
-        const ry =
-            y*cosPitch -
+        const ry=
+            y*cosPitch-
             rz*sinPitch;
 
 
-        rz =
-            y*sinPitch +
+        rz=
+            y*sinPitch+
             rz*cosPitch;
 
 
-        rz -=
-            camera.distance *
-            Math.min(W,H) *
-            .7;
+        rz-=
+            camera.distance*
+            Math.min(W,H)*.7;
 
 
-        const scale =
-            Math.min(W,H) *
-            .75 /
+        const scale=
+            Math.min(W,H)*
+            .75/
             Math.max(
                 1,
                 -rz
             );
 
 
-        const position = {
+        const position={
 
             x:
-                W/2 +
+                W/2+
                 rx*scale,
 
             y:
-                H/2 +
+                H/2+
                 ry*scale,
 
             scale,
@@ -2695,7 +2757,7 @@ function drawLoveTexts(time){
 
     list.sort(
         (a,b)=>
-            b.position.depth -
+            b.position.depth-
             a.position.depth
     );
 
@@ -2704,11 +2766,11 @@ function drawLoveTexts(time){
         const obj of list
     ){
 
-        const p =
+        const p=
             obj.position;
 
 
-        const size =
+        const size=
             Math.max(
                 5,
                 Math.min(
@@ -2719,10 +2781,10 @@ function drawLoveTexts(time){
 
 
         if(
-            p.x < -100 ||
-            p.x > W+100 ||
-            p.y < -100 ||
-            p.y > H+100
+            p.x<-100||
+            p.x>W+100||
+            p.y<-100||
+            p.y>H+100
         ){
 
             continue;
@@ -2732,27 +2794,27 @@ function drawLoveTexts(time){
         ctx.save();
 
 
-        ctx.textAlign =
+        ctx.textAlign=
             "center";
 
 
-        ctx.textBaseline =
+        ctx.textBaseline=
             "middle";
 
 
-        ctx.font =
+        ctx.font=
             `normal ${size}px Arial`;
 
 
-        ctx.fillStyle =
+        ctx.fillStyle=
             "rgba(255,205,225,.86)";
 
 
-        ctx.shadowColor =
+        ctx.shadowColor=
             "rgba(255,50,145,.65)";
 
 
-        ctx.shadowBlur =
+        ctx.shadowBlur=
             Math.min(
                 6,
                 size*.45
@@ -2777,7 +2839,7 @@ function drawLoveTexts(time){
 
 function drawCentralHeart(){
 
-    const position = {
+    const position={
 
         x:
             W/2,
@@ -2786,9 +2848,9 @@ function drawCentralHeart(){
             H/2,
 
         scale:
-            Math.min(W,H) *
-            .00145 *
-            settings.heartSize /
+            Math.min(W,H)*
+            .00145*
+            settings.heartSize/
             camera.distance
     };
 
@@ -2807,16 +2869,17 @@ function drawCentralHeart(){
 
 
     /*
-       MISMA LOGICA QUE "TE AMO"
+       MI MERE
+       MISMA LOGICA QUE TE AMO
     */
 
     ctx.save();
 
 
-    const size =
+    const size=
         Math.max(
             4.5,
-            9 * position.scale
+            9*position.scale
         );
 
 
@@ -2826,32 +2889,32 @@ function drawCentralHeart(){
     );
 
 
-    ctx.textAlign =
+    ctx.textAlign=
         "center";
 
 
-    ctx.textBaseline =
+    ctx.textBaseline=
         "middle";
 
 
-    ctx.font =
+    ctx.font=
         `normal ${size}px "Meredith",
         "Segoe Script",
         "Brush Script MT",
         cursive`;
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         "#ffffff";
 
 
-    ctx.shadowColor =
+    ctx.shadowColor=
         heartColors[
             settings.heartColor
         ].shadow;
 
 
-    ctx.shadowBlur =
+    ctx.shadowBlur=
         Math.min(
             6,
             size*.4
@@ -2873,24 +2936,24 @@ function drawCentralHeart(){
    MUSICA
 ========================================================= */
 
-const music =
+const music=
     document.getElementById(
         "music"
     );
 
 
-const musicButton =
+const musicButton=
     document.getElementById(
         "musicButton"
     );
 
 
-let musicPlaying = false;
+let musicPlaying=false;
 
 
 musicButton.addEventListener(
     "click",
-    async () => {
+    async()=>{
 
         try{
 
@@ -2898,9 +2961,9 @@ musicButton.addEventListener(
 
                 await music.play();
 
-                musicPlaying = true;
+                musicPlaying=true;
 
-                musicButton.textContent =
+                musicButton.textContent=
                     "❚❚";
 
                 musicButton.classList.add(
@@ -2911,9 +2974,9 @@ musicButton.addEventListener(
 
                 music.pause();
 
-                musicPlaying = false;
+                musicPlaying=false;
 
-                musicButton.textContent =
+                musicButton.textContent=
                     "♫";
 
                 musicButton.classList.remove(
@@ -2936,73 +2999,73 @@ musicButton.addEventListener(
    PANEL
 ========================================================= */
 
-const settingsButton =
+const settingsButton=
     document.getElementById(
         "settingsButton"
     );
 
 
-const settingsPanel =
+const settingsPanel=
     document.getElementById(
         "settingsPanel"
     );
 
 
-const speedSlider =
+const speedSlider=
     document.getElementById(
         "speedSlider"
     );
 
 
-const heartSizeSlider =
+const heartSizeSlider=
     document.getElementById(
         "heartSizeSlider"
     );
 
 
-const rotationButton =
+const rotationButton=
     document.getElementById(
         "rotationButton"
     );
 
 
-const speedValue =
+const speedValue=
     document.getElementById(
         "speedValue"
     );
 
 
-const heartSizeValue =
+const heartSizeValue=
     document.getElementById(
         "heartSizeValue"
     );
 
 
-const resetButton =
+const resetButton=
     document.getElementById(
         "resetButton"
     );
 
 
-const starBrightnessSlider =
+const starBrightnessSlider=
     document.getElementById(
         "starBrightnessSlider"
     );
 
 
-const starBrightnessValue =
+const starBrightnessValue=
     document.getElementById(
         "starBrightnessValue"
     );
 
 
-const heartColorValue =
+const heartColorValue=
     document.getElementById(
         "heartColorValue"
     );
 
 
-const colorButtons =
+const colorButtons=
     document.querySelectorAll(
         "[data-color]"
     );
@@ -3014,7 +3077,9 @@ const colorButtons =
 
 settingsButton.addEventListener(
     "click",
-    () => {
+    e=>{
+
+        e.stopPropagation();
 
         settingsPanel.classList.toggle(
             "show"
@@ -3029,7 +3094,7 @@ settingsButton.addEventListener(
 
 function updateSpeedLabel(){
 
-    const labels = [
+    const labels=[
 
         "Muy lenta",
 
@@ -3041,7 +3106,7 @@ function updateSpeedLabel(){
     ];
 
 
-    speedValue.textContent =
+    speedValue.textContent=
         labels[
             settings.orbitSpeed
         ];
@@ -3050,9 +3115,9 @@ function updateSpeedLabel(){
 
 speedSlider.addEventListener(
     "input",
-    () => {
+    ()=>{
 
-        settings.orbitSpeed =
+        settings.orbitSpeed=
             Number(
                 speedSlider.value
             );
@@ -3068,23 +3133,23 @@ speedSlider.addEventListener(
 
 function updateHeartSizeLabel(){
 
-    const value =
+    const value=
         settings.heartSize;
 
 
-    if(value <= .80){
+    if(value<=.80){
 
-        heartSizeValue.textContent =
+        heartSizeValue.textContent=
             "Pequeño";
 
-    }else if(value > 1.15){
+    }else if(value>1.15){
 
-        heartSizeValue.textContent =
+        heartSizeValue.textContent=
             "Grande";
 
     }else{
 
-        heartSizeValue.textContent =
+        heartSizeValue.textContent=
             "Normal";
     }
 }
@@ -3092,9 +3157,9 @@ function updateHeartSizeLabel(){
 
 heartSizeSlider.addEventListener(
     "input",
-    () => {
+    ()=>{
 
-        settings.heartSize =
+        settings.heartSize=
             Number(
                 heartSizeSlider.value
             );
@@ -3110,7 +3175,7 @@ heartSizeSlider.addEventListener(
    COLOR
 ========================================================= */
 
-const colorNames = {
+const colorNames={
 
     pink:"Rosa",
 
@@ -3123,33 +3188,36 @@ const colorNames = {
 
 
 colorButtons.forEach(
-    button => {
+    button=>{
 
         button.addEventListener(
             "click",
-            () => {
+            e=>{
 
-                const color =
+                e.stopPropagation();
+
+
+                const color=
                     button.dataset.color;
 
 
-                settings.heartColor =
+                settings.heartColor=
                     color;
 
 
                 colorButtons.forEach(
-                    item => {
+                    item=>{
 
                         item.classList.toggle(
                             "active",
-                            item.dataset.color ===
+                            item.dataset.color===
                             color
                         );
                     }
                 );
 
 
-                heartColorValue.textContent =
+                heartColorValue.textContent=
                     colorNames[color];
             }
         );
@@ -3163,28 +3231,28 @@ colorButtons.forEach(
 
 function updateStarBrightnessLabel(){
 
-    const value =
+    const value=
         settings.starBrightness;
 
 
-    if(value < .75){
+    if(value<.75){
 
-        starBrightnessValue.textContent =
+        starBrightnessValue.textContent=
             "Bajo";
 
-    }else if(value < 1.2){
+    }else if(value<1.2){
 
-        starBrightnessValue.textContent =
+        starBrightnessValue.textContent=
             "Normal";
 
-    }else if(value < 1.65){
+    }else if(value<1.65){
 
-        starBrightnessValue.textContent =
+        starBrightnessValue.textContent=
             "Alto";
 
     }else{
 
-        starBrightnessValue.textContent =
+        starBrightnessValue.textContent=
             "Muy alto";
     }
 }
@@ -3192,9 +3260,9 @@ function updateStarBrightnessLabel(){
 
 starBrightnessSlider.addEventListener(
     "input",
-    () => {
-
-        settings.starBrightness =
+    ()=>{
+        
+        settings.starBrightness=
             Number(
                 starBrightnessSlider.value
             );
@@ -3210,9 +3278,11 @@ starBrightnessSlider.addEventListener(
 
 function updateRotationButton(){
 
-    if(settings.autoRotation){
+    if(
+        settings.autoRotation
+    ){
 
-        rotationButton.textContent =
+        rotationButton.textContent=
             "🔄 Rotación automática: ON";
 
         rotationButton.classList.add(
@@ -3221,7 +3291,7 @@ function updateRotationButton(){
 
     }else{
 
-        rotationButton.textContent =
+        rotationButton.textContent=
             "⏸️ Rotación automática: OFF";
 
         rotationButton.classList.remove(
@@ -3233,9 +3303,9 @@ function updateRotationButton(){
 
 rotationButton.addEventListener(
     "click",
-    () => {
-
-        settings.autoRotation =
+    ()=>{
+        
+        settings.autoRotation=
             !settings.autoRotation;
 
         updateRotationButton();
@@ -3249,47 +3319,39 @@ rotationButton.addEventListener(
 
 resetButton.addEventListener(
     "click",
-    () => {
+    ()=>{
 
-        settings.orbitSpeed =
-            2;
+        settings.orbitSpeed=2;
 
-        settings.heartSize =
-            .75;
+        settings.heartSize=.75;
 
-        settings.autoRotation =
-            true;
+        settings.autoRotation=true;
 
-        settings.heartColor =
-            "pink";
+        settings.heartColor="pink";
 
-        settings.starBrightness =
-            2;
+        settings.starBrightness=2;
 
 
-        speedSlider.value =
-            2;
+        speedSlider.value=2;
 
-        heartSizeSlider.value =
-            .75;
+        heartSizeSlider.value=.75;
 
-        starBrightnessSlider.value =
-            2;
+        starBrightnessSlider.value=2;
 
 
         colorButtons.forEach(
-            button => {
+            button=>{
 
                 button.classList.toggle(
                     "active",
-                    button.dataset.color ===
+                    button.dataset.color===
                     "pink"
                 );
             }
         );
 
 
-        heartColorValue.textContent =
+        heartColorValue.textContent=
             "Rosa";
 
 
@@ -3311,14 +3373,11 @@ resetButton.addEventListener(
    ESTADO INICIAL
 ========================================================= */
 
-speedSlider.value =
-    2;
+speedSlider.value=2;
 
-heartSizeSlider.value =
-    .75;
+heartSizeSlider.value=.75;
 
-starBrightnessSlider.value =
-    2;
+starBrightnessSlider.value=2;
 
 
 updateSpeedLabel();
@@ -3330,16 +3389,16 @@ updateStarBrightnessLabel();
 updateRotationButton();
 
 
-heartColorValue.textContent =
+heartColorValue.textContent=
     "Rosa";
 
 
 colorButtons.forEach(
-    button => {
+    button=>{
 
         button.classList.toggle(
             "active",
-            button.dataset.color ===
+            button.dataset.color===
             "pink"
         );
     }
@@ -3352,17 +3411,21 @@ colorButtons.forEach(
 
 function animate(time){
 
+    /*
+       Zoom suave
+    */
+
     camera.distance +=
         (
-            camera.targetDistance -
+            camera.targetDistance-
             camera.distance
-        ) * .06;
+        )*.06;
 
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha=1;
 
 
-    ctx.fillStyle =
+    ctx.fillStyle=
         "#010006";
 
 
