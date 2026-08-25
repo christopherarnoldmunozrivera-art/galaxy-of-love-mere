@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mi Mere ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#010006;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+canvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+    cursor:grab;
+}
+
+canvas.dragging{
+    cursor:grabbing;
+}
+
+.title{
+    position:fixed;
+    top:22px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+
+    color:rgba(255,255,255,.72);
+    font-size:12px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 10px rgba(255,60,150,.8),
+        0 0 22px rgba(255,40,130,.35);
+
+    pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">Para mi Mere ❤️</div>
+
+<canvas id="galaxy"></canvas>
+
+<script>
+
+const canvas = document.getElementById("galaxy");
+
+const ctx = canvas.getContext("2d", {
+    alpha:false,
+    desynchronized:true
+});
+
+let W = 0;
+let H = 0;
+let DPR = 1;
+
+
+/* =========================================================
+   RESOLUCION
+========================================================= */
+
+function resize(){
+
+    W = window.innerWidth;
+    H = window.innerHeight;
+
+    DPR = Math.min(
+        window.devicePixelRatio || 1,
+        1.15
+    );
+
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+
+    ctx.setTransform(
+        DPR,0,0,DPR,0,0
+    );
+
+    createStars();
+    createHearts();
+    createCentralHeart();
+    createLoveTexts();
+}
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
+
+/* =========================================================
+   CAMARA
+========================================================= */
+
+const camera = {
+
+    yaw:0,
+
+    pitch:0.12,
+
+    distance:1,
+
+    targetDistance:1
+};
+
+
+/* =========================================================
+   MOUSE
+========================================================= */
+
+let dragging = false;
+
+let lastX = 0;
+let lastY = 0;
+
+canvas.addEventListener(
+    "mousedown",
+    e => {
+
+        dragging = true;
+
+        canvas.classList.add(
+            "dragging"
+        );
+
+        lastX = e.clientX;
+        lastY = e.clientY;
+    }
+);
+
+window.addEventListener(
+    "mouseup",
+    () => {
+
+        dragging = false;
+
+        canvas.classList.remove(
+            "dragging"
+        );
+    }
+);
+
+window.addEventListener(
+    "mousemove",
+    e => {
+
+        if(!dragging) return;
+
+        const dx =
+            e.clientX-lastX;
+
+        const dy =
+            e.clientY-lastY;
+
+        lastX = e.clientX;
+        lastY = e.clientY;
+
+        camera.yaw -=
+            dx*0.008;
+
+        camera.pitch -=
+            dy*0.006;
+
+        camera.pitch =
+            Math.max(
+                -1.35,
+                Math.min(
+                    1.35,
+                    camera.pitch
+                )
+            );
+    }
+);
+
+
+/* =========================================================
+   ZOOM
+========================================================= */
+
+canvas.addEventListener(
+    "wheel",
+    e => {
+
+        e.preventDefault();
+
+        camera.targetDistance +=
+            e.deltaY*0.0012;
+
+        camera.targetDistance =
+            Math.max(
+                0.38,
+                Math.min(
+                    2.7,
+                    camera.targetDistance
+                )
+            );
+
+    },
+    {passive:false}
+);
+
+
+/* =========================================================
+   FORMA DEL CORAZON
+========================================================= */
+
+function heartPoint(t,scale){
+
+    const x =
+        16 *
+        Math.pow(
+            Math.sin(t),
+            3
+        );
+
+    const y =
+        13*Math.cos(t)
+        -5*Math.cos(2*t)
+        -2*Math.cos(3*t)
+        -Math.cos(4*t);
+
+    return{
+        x:x*scale,
+        y:-y*scale
+    };
+}
+
+
+/* =========================================================
+   PARTICULAS DEL CORAZON
+========================================================= */
+
+function createHeartParticles(
+    scale,
+    amount
+){
+
+    const particles =
+        new Array(amount);
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        const t =
+            Math.random()*
+            Math.PI*2;
+
+        const p =
+            heartPoint(
+                t,
+                scale
+            );
+
+        const p2 =
+            heartPoint(
+                t+0.015,
+                scale
+            );
+
+        const dx =
+            p2.x-p.x;
+
+        const dy =
+            p2.y-p.y;
+
+        const len =
+            Math.sqrt(
+                dx*dx+
+                dy*dy
+            ) || 1;
+
+        const nx =
+            -dy/len;
+
+        const ny =
+            dx/len;
+
+        const thickness =
+            (Math.random()-.5)*
+            scale*.72;
+
+        particles[i] = {
+
+            x:
+                p.x+
+                nx*thickness,
+
+            y:
+                p.y+
+                ny*thickness,
+
+            size:
+                Math.random()*
+                .70+
+                .30,
+
+            alpha:
+                Math.random()*
+                .55+
+                .35
+        };
+    }
+
+    return particles;
+}
+
+
+/* =========================================================
+   PARTICULAS DE COLOR
+========================================================= */
+
+const accentColors = [
+    "rgba(80,180,255,.80)",
+    "rgba(100,220,255,.75)",
+    "rgba(170,100,255,.70)",
+    "rgba(255,80,180,.72)",
+    "rgba(120,120,255,.70)"
+];
+
+function createAccentParticles(
+    radius,
+    amount
+){
+
+    const particles =
+        new Array(amount);
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        const angle =
+            Math.random()*
+            Math.PI*2;
+
+        const distance =
+            radius*
+            (
+                .35+
+                Math.random()*.65
+            );
+
+        particles[i] = {
+
+            x:
+                Math.cos(angle)*
+                distance,
+
+            y:
+                Math.sin(angle)*
+                distance*
+                .62,
+
+            size:
+                Math.random()*
+                1.25+
+                .45,
+
+            color:
+                accentColors[
+                    Math.floor(
+                        Math.random()*
+                        accentColors.length
+                    )
+                ],
+
+            alpha:
+                Math.random()*
+                .35+
+                .30
+        };
+    }
+
+    return particles;
+}
+
+
+/* =========================================================
+   CORAZON CENTRAL
+========================================================= */
+
+const centralHeart = {
+
+    particles:[],
+
+    accentParticles:[],
+
+    scale:1
+};
+
+function createCentralHeart(){
+
+    const scale =
+        Math.min(W,H)*
+        .014;
+
+    centralHeart.scale =
+        scale;
+
+    centralHeart.particles =
+        createHeartParticles(
+            scale,
+            1000
+        );
+
+    centralHeart.accentParticles =
+        createAccentParticles(
+            Math.min(W,H)*.035,
+            65
+        );
+}
+
+
+/* =========================================================
+   17 CORAZONES PEQUEÑOS
+========================================================= */
+
+const orbitHearts = [];
+
+function createHearts(){
+
+    orbitHearts.length = 0;
+
+    const count = 17;
+
+    const radius =
+        Math.min(W,H)*
+        .34;
+
+    const smallScale =
+        Math.min(W,H)*
+        .0048;
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        orbitHearts.push({
+
+            angle:
+                Math.PI*
+                2/count*
+                i,
+
+            radius,
+
+            particles:
+                createHeartParticles(
+                    smallScale,
+                    330
+                ),
+
+            accentParticles:
+                createAccentParticles(
+                    Math.min(W,H)*.010,
+                    18
+                )
+        });
+    }
+}
+
+
+/* =========================================================
+   FRASES ROMANTICAS
+========================================================= */
+
+const loveWords = [
+
+    "Mi princesa ❤️",
+    "Mi niña 🥰",
+    "Mi cielo 💍",
+    "Mi corazón ❤️",
+    "Mi amor 💗",
+    "Mi ángel 😇",
+    "Mi cuchurrumina 🥺",
+    "Mi terroncito de azúcar 🍬",
+    "Mi vida 💕",
+    "Mi bonita 🌷",
+    "Mi hermosa 💖",
+    "Mi reina 👑",
+    "Mi preciosa 💎",
+    "Mi todo ❤️",
+    "Amor mío 💕",
+    "Mi muñequita 🎀",
+    "Mi felicidad ☀️",
+    "Mi bebé 🥺",
+    "Mi niña hermosa 🌸",
+    "Mi amorcito 💗",
+    "Mi tesoro 💎",
+    "Mi estrellita ⭐",
+    "Mi princesa hermosa 👑",
+    "Mi consentida 🥰",
+    "Mi mundo 🌎",
+    "Mi razón ❤️",
+    "Mi dulzura 🍯",
+    "Mi bonita 💐",
+    "Mi compañera 🫶",
+    "Mi persona favorita ❤️",
+    "Mi sueño ✨",
+    "Mi luna 🌙",
+    "Mi sol ☀️",
+    "Mi flor 🌹",
+    "Mi pequeña 🥺",
+    "Mi amor eterno 💍",
+    "Mi hogar 🏠",
+    "Mi locura 😍",
+    "Mi paz 🕊️",
+    "Mi alegría 🌷"
+];
+
+const loveTexts = [];
+
+
+function createLoveTexts(){
+
+    loveTexts.length = 0;
+
+    const base =
+        Math.min(W,H);
+
+    loveWords.forEach(
+        text => {
+
+            const radius =
+                base*
+                (
+                    .42+
+                    Math.random()*.58
+                );
+
+            const y =
+                (
+                    Math.random()-.5
+                )*
+                base*
+                .60;
+
+            const speed =
+                .00008+
+                Math.random()*.00024;
+
+            loveTexts.push({
+
+                text,
+
+                angle:
+                    Math.random()*
+                    Math.PI*2,
+
+                radius,
+
+                y,
+
+                speed
+            });
+        }
+    );
+}
+
+
+/* =========================================================
+   ESTRELLAS
+========================================================= */
+
+let stars = [];
+
+function createStars(){
+
+    stars.length = 0;
+
+    const amount =
+        Math.max(
+            600,
+            Math.floor(
+                W*H/1800
+            )
+        );
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        const theta =
+            Math.random()*
+            Math.PI*2;
+
+        const phi =
+            Math.acos(
+                2*Math.random()-1
+            );
+
+        const radius =
+            Math.min(W,H)*
+            (
+                .25+
+                Math.random()*1.6
+            );
+
+        stars.push({
+
+            theta,
+            phi,
+            radius,
+
+            size:
+                Math.random()*
+                2.4+
+                .7,
+
+            alpha:
+                Math.random()*
+                .65+
+                .3,
+
+            twinkle:
+                Math.random()*
+                6.283
+        });
+    }
+}
+
+
+/* =========================================================
+   PROYECCION 3D
+========================================================= */
+
+function project3D(
+    x,
+    y,
+    z
+){
+
+    const cy =
+        Math.cos(
+            camera.yaw
+        );
+
+    const sy =
+        Math.sin(
+            camera.yaw
+        );
+
+    let rx =
+        x*cy-
+        z*sy;
+
+    let rz =
+        x*sy+
+        z*cy;
+
+
+    const cp =
+        Math.cos(
+            camera.pitch
+        );
+
+    const sp =
+        Math.sin(
+            camera.pitch
+        );
+
+    let ry =
+        y*cp-
+        rz*sp;
+
+    rz =
+        y*sp+
+        rz*cp;
+
+
+    rz -=
+        camera.distance*
+        Math.min(W,H)*
+        .7;
+
+
+    const focal =
+        Math.min(W,H)*
+        .75;
+
+    const scale =
+        focal/
+        Math.max(
+            1,
+            -rz
+        );
+
+    return{
+
+        x:
+            W/2+
+            rx*scale,
+
+        y:
+            H/2+
+            ry*scale,
+
+        scale,
+
+        depth:rz
+    };
+}
+
+
+/* =========================================================
+   ESTRELLAS
+========================================================= */
+
+function drawStars(time){
+
+    const cosYaw =
+        Math.cos(camera.yaw);
+
+    const sinYaw =
+        Math.sin(camera.yaw);
+
+    const cosPitch =
+        Math.cos(camera.pitch);
+
+    const sinPitch =
+        Math.sin(camera.pitch);
+
+    for(
+        const star of stars
+    ){
+
+        const theta =
+            star.theta+
+            time*.000045;
+
+        const sinPhi =
+            Math.sin(star.phi);
+
+        const cosTheta =
+            Math.cos(theta);
+
+        const sinTheta =
+            Math.sin(theta);
+
+        let x =
+            sinPhi*
+            cosTheta*
+            star.radius;
+
+        let y =
+            Math.cos(
+                star.phi
+            )*
+            star.radius;
+
+        let z =
+            sinPhi*
+            sinTheta*
+            star.radius;
+
+
+        const rx =
+            x*cosYaw-
+            z*sinYaw;
+
+        let rz =
+            x*sinYaw+
+            z*cosYaw;
+
+
+        const ry =
+            y*cosPitch-
+            rz*sinPitch;
+
+        rz =
+            y*sinPitch+
+            rz*cosPitch;
+
+
+        rz -=
+            camera.distance*
+            Math.min(W,H)*
+            .7;
+
+
+        const scale =
+            Math.min(W,H)*
+            .75/
+            Math.max(
+                1,
+                -rz
+            );
+
+
+        const px =
+            W/2+
+            rx*scale;
+
+        const py =
+            H/2+
+            ry*scale;
+
+
+        if(
+            px<-10 ||
+            px>W+10 ||
+            py<-10 ||
+            py>H+10
+        ) continue;
+
+
+        const twinkle =
+            .75+
+            Math.sin(
+                time*.002+
+                star.twinkle
+            )*.25;
+
+
+        const size =
+            Math.max(
+                .6,
+                star.size*
+                scale*
+                1.8
+            );
+
+
+        ctx.globalAlpha =
+            Math.min(
+                1,
+                star.alpha*
+                twinkle
+            );
+
+
+        ctx.save();
+
+        ctx.translate(
+            px,
+            py
+        );
+
+        ctx.rotate(
+            Math.PI/4
+        );
+
+        ctx.fillStyle =
+            "#ffffff";
+
+        ctx.fillRect(
+            -size/2,
+            -size/2,
+            size,
+            size
+        );
+
+        ctx.restore();
+    }
+
+    ctx.globalAlpha=1;
+}
+
+
+/* =========================================================
+   HALO
+========================================================= */
+
+function drawGlow(){
+
+    const radius =
+        Math.min(W,H)*
+        .20/
+        camera.distance;
+
+    const gradient =
+        ctx.createRadialGradient(
+            W/2,
+            H/2,
+            0,
+            W/2,
+            H/2,
+            radius
+        );
+
+    gradient.addColorStop(
+        0,
+        "rgba(255,35,130,.16)"
+    );
+
+    gradient.addColorStop(
+        .4,
+        "rgba(255,25,120,.06)"
+    );
+
+    gradient.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        W/2,
+        H/2,
+        radius,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+}
+
+
+/* =========================================================
+   ORBITA
+========================================================= */
+
+function drawOrbit(){
+
+    const radius =
+        Math.min(W,H)*
+        .34;
+
+    const points = 70;
+
+    ctx.beginPath();
+
+    for(
+        let i=0;
+        i<=points;
+        i++
+    ){
+
+        const a =
+            i/points*
+            Math.PI*2;
+
+        const p =
+            project3D(
+                Math.cos(a)*
+                radius,
+
+                0,
+
+                Math.sin(a)*
+                radius
+            );
+
+        if(i===0)
+            ctx.moveTo(
+                p.x,
+                p.y
+            );
+        else
+            ctx.lineTo(
+                p.x,
+                p.y
+            );
+    }
+
+    ctx.strokeStyle =
+        "rgba(255,60,150,.08)";
+
+    ctx.lineWidth = 1;
+
+    ctx.stroke();
+}
+
+
+/* =========================================================
+   PARTICULAS DEL CORAZON
+========================================================= */
+
+function drawHeartParticles(
+    particles,
+    position,
+    rotation
+){
+
+    const scale =
+        position.scale;
+
+    ctx.save();
+
+    ctx.translate(
+        position.x,
+        position.y
+    );
+
+    ctx.rotate(
+        rotation
+    );
+
+    ctx.fillStyle =
+        "rgba(255,55,150,.9)";
+
+    for(
+        const p of particles
+    ){
+
+        const x =
+            p.x*scale;
+
+        const y =
+            p.y*scale;
+
+        const size =
+            Math.max(
+                .25,
+                p.size*
+                scale*
+                1.7
+            );
+
+        ctx.globalAlpha =
+            p.alpha;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+    }
+
+    ctx.globalAlpha=1;
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   PARTICULAS DE COLOR
+========================================================= */
+
+function drawAccentParticles(
+    particles,
+    position
+){
+
+    const scale =
+        position.scale;
+
+    ctx.save();
+
+    ctx.translate(
+        position.x,
+        position.y
+    );
+
+    for(
+        const p of particles
+    ){
+
+        const size =
+            Math.max(
+                .35,
+                p.size*scale
+            );
+
+        ctx.globalAlpha =
+            p.alpha;
+
+        ctx.fillStyle =
+            p.color;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x*scale,
+            p.y*scale,
+            size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+    }
+
+    ctx.globalAlpha=1;
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   TE AMO
+   MISMA LOGICA DE ESCALA
+========================================================= */
+
+function drawHeartText(
+    text,
+    position
+){
+
+    const scale =
+        position.scale;
+
+    /*
+       Tamaño pequeño y ligado a la
+       perspectiva del corazón.
+    */
+
+    const size =
+        Math.max(
+            4.5,
+            7*scale
+        );
+
+    ctx.save();
+
+    ctx.translate(
+        position.x,
+        position.y
+    );
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+    /*
+       Misma letra que Mi Mere.
+    */
+
+    ctx.font =
+        `normal ${size}px "Meredith",
+        "Segoe Script",
+        "Brush Script MT",
+        cursive`;
+
+    ctx.fillStyle =
+        "#ffffff";
+
+    ctx.shadowColor =
+        "rgba(255,55,150,.60)";
+
+    ctx.shadowBlur =
+        Math.min(
+            5,
+            size*.35
+        );
+
+    ctx.fillText(
+        text,
+        0,
+        0
+    );
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   17 CORAZONES ORBITALES
+========================================================= */
+
+function drawOrbitHearts(time){
+
+    const list=[];
+
+    const orbitSpeed =
+        time*.00035;
+
+    const cosYaw =
+        Math.cos(camera.yaw);
+
+    const sinYaw =
+        Math.sin(camera.yaw);
+
+    const cosPitch =
+        Math.cos(camera.pitch);
+
+    const sinPitch =
+        Math.sin(camera.pitch);
+
+
+    for(
+        const heart of orbitHearts
+    ){
+
+        const angle =
+            heart.angle+
+            orbitSpeed;
+
+        const x =
+            Math.cos(angle)*
+            heart.radius;
+
+        const y=0;
+
+        const z =
+            Math.sin(angle)*
+            heart.radius;
+
+
+        const rx =
+            x*cosYaw-
+            z*sinYaw;
+
+        let rz =
+            x*sinYaw+
+            z*cosYaw;
+
+
+        const ry =
+            y*cosPitch-
+            rz*sinPitch;
+
+        rz =
+            y*sinPitch+
+            rz*cosPitch;
+
+
+        rz -=
+            camera.distance*
+            Math.min(W,H)*
+            .7;
+
+
+        const scale =
+            Math.min(W,H)*
+            .75/
+            Math.max(
+                1,
+                -rz
+            );
+
+
+        list.push({
+
+            heart,
+
+            depth:rz,
+
+            position:{
+
+                x:
+                    W/2+
+                    rx*scale,
+
+                y:
+                    H/2+
+                    ry*scale,
+
+                scale
+            }
+        });
+    }
+
+
+    list.sort(
+        (a,b)=>
+            b.depth-a.depth
+    );
+
+
+    for(
+        const item of list
+    ){
+
+        /*
+           Siempre mirando a la cámara.
+        */
+
+        drawHeartParticles(
+            item.heart.particles,
+            item.position,
+            0
+        );
+
+        /*
+           Partículas de colores detrás
+           del texto.
+        */
+
+        drawAccentParticles(
+            item.heart.accentParticles,
+            item.position
+        );
+
+        /*
+           Te amo queda exactamente dentro.
+        */
+
+        drawHeartText(
+            "Te amo",
+            item.position
+        );
+    }
+}
+
+
+/* =========================================================
+   TEXTOS ROMANTICOS EXTERIORES
+========================================================= */
+
+function drawLoveTexts(time){
+
+    const list=[];
+
+    const cosYaw =
+        Math.cos(camera.yaw);
+
+    const sinYaw =
+        Math.sin(camera.yaw);
+
+    const cosPitch =
+        Math.cos(camera.pitch);
+
+    const sinPitch =
+        Math.sin(camera.pitch);
+
+
+    for(
+        const item of loveTexts
+    ){
+
+        const angle =
+            item.angle+
+            time*item.speed;
+
+
+        const x =
+            Math.cos(angle)*
+            item.radius;
+
+        const y =
+            item.y;
+
+        const z =
+            Math.sin(angle)*
+            item.radius;
+
+
+        const rx =
+            x*cosYaw-
+            z*sinYaw;
+
+        let rz =
+            x*sinYaw+
+            z*cosYaw;
+
+
+        const ry =
+            y*cosPitch-
+            rz*sinPitch;
+
+        rz =
+            y*sinPitch+
+            rz*cosPitch;
+
+
+        rz -=
+            camera.distance*
+            Math.min(W,H)*
+            .7;
+
+
+        const scale =
+            Math.min(W,H)*
+            .75/
+            Math.max(
+                1,
+                -rz
+            );
+
+
+        const position={
+
+            x:
+                W/2+
+                rx*scale,
+
+            y:
+                H/2+
+                ry*scale,
+
+            scale,
+
+            depth:rz
+        };
+
+
+        list.push({
+            item,
+            position
+        });
+    }
+
+
+    list.sort(
+        (a,b)=>
+            b.position.depth-
+            a.position.depth
+    );
+
+
+    for(
+        const obj of list
+    ){
+
+        const p =
+            obj.position;
+
+
+        const size =
+            Math.max(
+                5,
+                Math.min(
+                    14,
+                    8*p.scale
+                )
+            );
+
+
+        if(
+            p.x<-100 ||
+            p.x>W+100 ||
+            p.y<-100 ||
+            p.y>H+100
+        ){
+            continue;
+        }
+
+
+        ctx.save();
+
+        ctx.textAlign =
+            "center";
+
+        ctx.textBaseline =
+            "middle";
+
+        ctx.font =
+            `normal ${size}px Arial`;
+
+        ctx.fillStyle =
+            "rgba(255,205,225,.86)";
+
+        ctx.shadowColor =
+            "rgba(255,50,145,.65)";
+
+        ctx.shadowBlur =
+            Math.min(
+                6,
+                size*.45
+            );
+
+        ctx.fillText(
+            obj.item.text,
+            p.x,
+            p.y
+        );
+
+        ctx.restore();
+    }
+}
+
+
+/* =========================================================
+   CORAZON CENTRAL
+   MI MERE ❤️
+   MISMA LOGICA QUE TE AMO
+========================================================= */
+
+function drawCentralHeart(){
+
+    const position = {
+
+        x:
+            W/2,
+
+        y:
+            H/2,
+
+        scale:
+            Math.min(W,H)*
+            .00145/
+            camera.distance
+    };
+
+
+    /*
+       Corazón principal.
+    */
+
+    drawHeartParticles(
+        centralHeart.particles,
+        position,
+        0
+    );
+
+
+    /*
+       Partículas de colores detrás.
+    */
+
+    drawAccentParticles(
+        centralHeart.accentParticles,
+        position
+    );
+
+
+    /* =====================================================
+       MI MERE ❤️
+
+       EXACTAMENTE LA MISMA LOGICA
+       QUE "TE AMO".
+
+       7 para Te amo
+       9 para Mi Mere
+    ===================================================== */
+
+    ctx.save();
+
+    const size =
+        Math.max(
+            4.5,
+            9*position.scale
+        );
+
+
+    /*
+       Nos movemos al mismo centro
+       del corazón.
+    */
+
+    ctx.translate(
+        position.x,
+        position.y
+    );
+
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+
+    /*
+       Misma fuente.
+    */
+
+    ctx.font =
+        `normal ${size}px "Meredith",
+        "Segoe Script",
+        "Brush Script MT",
+        cursive`;
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.shadowColor =
+        "rgba(255,55,150,.60)";
+
+
+    ctx.shadowBlur =
+        Math.min(
+            6,
+            size*.4
+        );
+
+
+    /*
+       Texto exactamente en 0,0:
+       el centro del corazón.
+    */
+
+    ctx.fillText(
+        "Mi Mere ❤️",
+        0,
+        0
+    );
+
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   ANIMACION
+========================================================= */
+
+function animate(time){
+
+    /*
+       Zoom suave.
+    */
+
+    camera.distance +=
+        (
+            camera.targetDistance-
+            camera.distance
+        )*.06;
+
+
+    ctx.globalAlpha=1;
+
+
+    /*
+       Fondo.
+    */
+
+    ctx.fillStyle =
+        "#010006";
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /*
+       Estrellas.
+    */
+
+    drawStars(time);
+
+
+    /*
+       Halo.
+    */
+
+    drawGlow();
+
+
+    /*
+       Orbita.
+    */
+
+    drawOrbit();
+
+
+    /*
+       Frases exteriores.
+    */
+
+    drawLoveTexts(time);
+
+
+    /*
+       17 corazones.
+    */
+
+    drawOrbitHearts(time);
+
+
+    /*
+       Corazon principal.
+    */
+
+    drawCentralHeart();
+
+
+    requestAnimationFrame(
+        animate
+    );
+}
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+resize();
+
+requestAnimationFrame(
+    animate
+);
+
+</script>
+
+</body>
+</html>
