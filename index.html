@@ -47,7 +47,6 @@ body{
 
 canvas{
     position:fixed;
-
     inset:0;
 
     width:100%;
@@ -66,8 +65,7 @@ canvas{
 
     -webkit-touch-callout:none;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color:transparent;
 }
 
 canvas.dragging{
@@ -85,13 +83,11 @@ canvas.dragging{
     top:22px;
     left:50%;
 
-    transform:
-        translateX(-50%);
+    transform:translateX(-50%);
 
     z-index:5;
 
-    color:
-        rgba(255,255,255,.72);
+    color:rgba(255,255,255,.72);
 
     font-size:12px;
 
@@ -100,11 +96,8 @@ canvas.dragging{
     text-transform:uppercase;
 
     text-shadow:
-        0 0 10px
-        rgba(255,60,150,.8),
-
-        0 0 22px
-        rgba(255,40,130,.35);
+        0 0 10px rgba(255,60,150,.8),
+        0 0 22px rgba(255,40,130,.35);
 
     pointer-events:none;
 }
@@ -149,15 +142,11 @@ canvas.dragging{
     backdrop-filter:blur(8px);
     -webkit-backdrop-filter:blur(8px);
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color:transparent;
 
     box-shadow:
-        0 0 12px
-        rgba(255,50,150,.35),
-
-        inset 0 0 12px
-        rgba(255,50,150,.12);
+        0 0 12px rgba(255,50,150,.35),
+        inset 0 0 12px rgba(255,50,150,.12);
 
     transition:
         transform .2s ease,
@@ -172,36 +161,26 @@ canvas.dragging{
         rgba(255,45,145,.22);
 
     box-shadow:
-        0 0 20px
-        rgba(255,50,150,.55),
-
-        inset 0 0 14px
-        rgba(255,50,150,.18);
+        0 0 20px rgba(255,50,150,.55),
+        inset 0 0 14px rgba(255,50,150,.18);
 }
 
 .controlButton.playing{
-    animation:
-        musicPulse 1.6s infinite;
+    animation:musicPulse 1.6s infinite;
 }
 
 @keyframes musicPulse{
 
     0%,100%{
         box-shadow:
-            0 0 12px
-            rgba(255,50,150,.35),
-
-            inset 0 0 12px
-            rgba(255,50,150,.10);
+            0 0 12px rgba(255,50,150,.35),
+            inset 0 0 12px rgba(255,50,150,.10);
     }
 
     50%{
         box-shadow:
-            0 0 25px
-            rgba(255,50,150,.75),
-
-            inset 0 0 16px
-            rgba(255,50,150,.20);
+            0 0 25px rgba(255,50,150,.75),
+            inset 0 0 16px rgba(255,50,150,.20);
     }
 }
 
@@ -240,11 +219,8 @@ canvas.dragging{
     -webkit-backdrop-filter:blur(14px);
 
     box-shadow:
-        0 0 25px
-        rgba(255,40,140,.22),
-
-        inset 0 0 25px
-        rgba(255,40,140,.05);
+        0 0 25px rgba(255,40,140,.22),
+        inset 0 0 25px rgba(255,40,140,.05);
 
     color:#fff;
 
@@ -281,8 +257,7 @@ canvas.dragging{
     margin-bottom:18px;
 
     text-shadow:
-        0 0 10px
-        rgba(255,60,150,.6);
+        0 0 10px rgba(255,60,150,.6);
 }
 
 .setting{
@@ -426,8 +401,7 @@ input[type="range"]::-moz-range-thumb{
         rgba(255,100,180,.55);
 
     box-shadow:
-        0 0 10px
-        rgba(255,60,150,.25);
+        0 0 10px rgba(255,60,150,.25);
 }
 
 
@@ -470,8 +444,7 @@ input[type="range"]::-moz-range-thumb{
 
 .rotationButton.on{
     box-shadow:
-        0 0 12px
-        rgba(255,50,150,.3);
+        0 0 12px rgba(255,50,150,.3);
 }
 
 
@@ -510,7 +483,6 @@ input[type="range"]::-moz-range-thumb{
 
 <body>
 
-
 <div class="title">
     Para mi Mere ❤️
 </div>
@@ -529,7 +501,7 @@ input[type="range"]::-moz-range-thumb{
 
 
 <!-- =====================================================
-     PANEL DE CONFIGURACION
+     PANEL
 ===================================================== -->
 
 <div id="settingsPanel">
@@ -538,8 +510,6 @@ input[type="range"]::-moz-range-thumb{
         ⚙️ Configuración
     </div>
 
-
-    <!-- VELOCIDAD -->
 
     <div class="setting">
 
@@ -567,8 +537,6 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
-    <!-- TAMAÑO -->
-
     <div class="setting">
 
         <div class="settingLabel">
@@ -580,7 +548,7 @@ input[type="range"]::-moz-range-thumb{
             <span
                 class="value"
                 id="heartSizeValue">
-                Pequeño
+                Normal
             </span>
 
         </div>
@@ -591,11 +559,9 @@ input[type="range"]::-moz-range-thumb{
             min="0.75"
             max="1.35"
             step="0.05"
-            value="0.75">
+            value="1">
     </div>
 
-
-    <!-- COLOR -->
 
     <div class="setting">
 
@@ -644,8 +610,6 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
-    <!-- ESTRELLAS -->
-
     <div class="setting">
 
         <div class="settingLabel">
@@ -672,8 +636,6 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
-    <!-- ROTACION -->
-
     <div class="setting">
 
         <div class="settingLabel">
@@ -695,8 +657,6 @@ input[type="range"]::-moz-range-thumb{
     </div>
 
 
-    <!-- RESTAURAR -->
-
     <button
         id="resetButton"
         class="resetButton">
@@ -709,8 +669,8 @@ input[type="range"]::-moz-range-thumb{
 
 
 <!-- =====================================================
-     CONTROLES
-===================================================== -->
+     BOTONES
+========================================================= -->
 
 <div class="controls">
 
@@ -722,7 +682,6 @@ input[type="range"]::-moz-range-thumb{
         ♫
 
     </button>
-
 
     <button
         id="settingsButton"
@@ -770,7 +729,11 @@ const settings = {
 
     orbitSpeed:2,
 
-    heartSize:.75,
+    /*
+       CORAZON PRINCIPAL MEDIANO
+    */
+
+    heartSize:1,
 
     autoRotation:true,
 
@@ -853,22 +816,16 @@ let pinchStartCameraDistance = 1;
    DISTANCIA ENTRE DEDOS
 ========================================================= */
 
-function getTouchDistance(
-    a,
-    b
-){
+function getTouchDistance(a,b){
 
     const dx =
-        b.clientX -
-        a.clientX;
+        b.clientX-a.clientX;
 
     const dy =
-        b.clientY -
-        a.clientY;
+        b.clientY-a.clientY;
 
     return Math.sqrt(
-        dx*dx +
-        dy*dy
+        dx*dx+dy*dy
     );
 }
 
@@ -877,10 +834,7 @@ function getTouchDistance(
    MOVER CAMARA
 ========================================================= */
 
-function moveCamera(
-    x,
-    y
-){
+function moveCamera(x,y){
 
     const dx =
         x-lastX;
@@ -888,18 +842,14 @@ function moveCamera(
     const dy =
         y-lastY;
 
-
-    lastX = x;
-    lastY = y;
-
+    lastX=x;
+    lastY=y;
 
     camera.yaw -=
         dx*.008;
 
-
     camera.pitch -=
         dy*.006;
-
 
     camera.pitch =
         Math.max(
@@ -920,46 +870,30 @@ canvas.addEventListener(
     "pointerdown",
     e => {
 
-        /*
-           Mouse:
-           solamente botón izquierdo.
-        */
-
         if(
-            e.pointerType === "mouse" &&
-            e.button !== 0
+            e.pointerType==="mouse" &&
+            e.button!==0
         ){
             return;
         }
-
 
         e.preventDefault();
 
 
-        /*
-           Si ya estamos usando
-           un puntero, ignoramos otros.
-        */
-
         if(
-            activePointerId !== null
+            activePointerId!==null
         ){
-
             return;
         }
 
 
-        dragging = true;
+        dragging=true;
 
-        activePointerId =
+        activePointerId=
             e.pointerId;
 
-
-        lastX =
-            e.clientX;
-
-        lastY =
-            e.clientY;
+        lastX=e.clientX;
+        lastY=e.clientY;
 
 
         canvas.classList.add(
@@ -991,16 +925,12 @@ canvas.addEventListener(
 
         if(
             !dragging ||
-            activePointerId !==
-            e.pointerId
+            activePointerId!==e.pointerId
         ){
-
             return;
         }
 
-
         e.preventDefault();
-
 
         moveCamera(
             e.clientX,
@@ -1014,25 +944,21 @@ canvas.addEventListener(
 
 
 /* =========================================================
-   STOP POINTER
+   POINTER UP
 ========================================================= */
 
 function stopPointer(e){
 
     if(
-        activePointerId !== null &&
-        e.pointerId !==
-        activePointerId
+        activePointerId!==null &&
+        e.pointerId!==activePointerId
     ){
-
         return;
     }
 
+    dragging=false;
 
-    dragging = false;
-
-    activePointerId = null;
-
+    activePointerId=null;
 
     canvas.classList.remove(
         "dragging"
@@ -1048,7 +974,6 @@ function stopPointer(e){
     }catch(error){}
 }
 
-
 canvas.addEventListener(
     "pointerup",
     stopPointer
@@ -1061,7 +986,7 @@ canvas.addEventListener(
 
 
 /* =========================================================
-   TOUCH START - RESPALDO
+   TOUCH START
 ========================================================= */
 
 canvas.addEventListener(
@@ -1071,53 +996,41 @@ canvas.addEventListener(
         e.preventDefault();
 
 
-        /*
-           Un dedo = movimiento.
-        */
-
         if(
-            e.touches.length === 1
+            e.touches.length===1
         ){
 
-            touchDragging = true;
+            touchDragging=true;
 
-            pinchActive = false;
+            pinchActive=false;
 
-
-            lastX =
+            lastX=
                 e.touches[0].clientX;
 
-            lastY =
+            lastY=
                 e.touches[0].clientY;
-
 
             return;
         }
 
 
-        /*
-           Dos dedos = zoom.
-        */
-
         if(
-            e.touches.length >= 2
+            e.touches.length>=2
         ){
 
-            touchDragging = false;
+            touchDragging=false;
 
-            dragging = false;
+            dragging=false;
 
-            pinchActive = true;
+            pinchActive=true;
 
-
-            pinchStartDistance =
+            pinchStartDistance=
                 getTouchDistance(
                     e.touches[0],
                     e.touches[1]
                 );
 
-
-            pinchStartCameraDistance =
+            pinchStartCameraDistance=
                 camera.targetDistance;
         }
 
@@ -1129,7 +1042,7 @@ canvas.addEventListener(
 
 
 /* =========================================================
-   TOUCH MOVE - RESPALDO
+   TOUCH MOVE
 ========================================================= */
 
 canvas.addEventListener(
@@ -1139,37 +1052,30 @@ canvas.addEventListener(
         e.preventDefault();
 
 
-        /*
-           PINCH ZOOM
-        */
-
         if(
-            e.touches.length >= 2 &&
+            e.touches.length>=2 &&
             pinchActive
         ){
 
-            const currentDistance =
+            const currentDistance=
                 getTouchDistance(
                     e.touches[0],
                     e.touches[1]
                 );
 
-
             if(
-                pinchStartDistance > 0
+                pinchStartDistance>0
             ){
 
-                const ratio =
-                    pinchStartDistance /
+                const ratio=
+                    pinchStartDistance/
                     currentDistance;
 
-
-                let newDistance =
-                    pinchStartCameraDistance *
+                let newDistance=
+                    pinchStartCameraDistance*
                     ratio;
 
-
-                newDistance =
+                newDistance=
                     Math.max(
                         .38,
                         Math.min(
@@ -1178,35 +1084,22 @@ canvas.addEventListener(
                         )
                     );
 
-
-                camera.targetDistance =
+                camera.targetDistance=
                     newDistance;
             }
-
 
             return;
         }
 
 
-        /*
-           UN DEDO
-        */
-
         if(
-            e.touches.length === 1 &&
+            e.touches.length===1 &&
             touchDragging
         ){
 
-            const x =
-                e.touches[0].clientX;
-
-            const y =
-                e.touches[0].clientY;
-
-
             moveCamera(
-                x,
-                y
+                e.touches[0].clientX,
+                e.touches[0].clientY
             );
         }
 
@@ -1228,34 +1121,27 @@ canvas.addEventListener(
         e.preventDefault();
 
 
-        /*
-           Si queda un dedo después
-           del pinch, retomamos movimiento.
-        */
-
         if(
-            e.touches.length === 1
+            e.touches.length===1
         ){
 
-            pinchActive = false;
+            pinchActive=false;
 
-            touchDragging = true;
+            touchDragging=true;
 
-
-            lastX =
+            lastX=
                 e.touches[0].clientX;
 
-            lastY =
+            lastY=
                 e.touches[0].clientY;
-
 
             return;
         }
 
 
-        touchDragging = false;
+        touchDragging=false;
 
-        pinchActive = false;
+        pinchActive=false;
 
     },
     {
@@ -1268,9 +1154,9 @@ canvas.addEventListener(
     "touchcancel",
     () => {
 
-        touchDragging = false;
+        touchDragging=false;
 
-        pinchActive = false;
+        pinchActive=false;
 
     },
     {
@@ -1289,12 +1175,10 @@ canvas.addEventListener(
 
         e.preventDefault();
 
-
         camera.targetDistance +=
             e.deltaY*.0012;
 
-
-        camera.targetDistance =
+        camera.targetDistance=
             Math.max(
                 .38,
                 Math.min(
@@ -1316,31 +1200,29 @@ canvas.addEventListener(
 
 function resize(){
 
-    W =
-        window.innerWidth;
+    W=window.innerWidth;
 
-    H =
-        window.innerHeight;
+    H=window.innerHeight;
 
 
-    DPR =
+    DPR=
         Math.min(
-            window.devicePixelRatio || 1,
+            window.devicePixelRatio||1,
             1.15
         );
 
 
-    canvas.width =
+    canvas.width=
         W*DPR;
 
-    canvas.height =
+    canvas.height=
         H*DPR;
 
 
-    canvas.style.width =
+    canvas.style.width=
         W+"px";
 
-    canvas.style.height =
+    canvas.style.height=
         H+"px";
 
 
@@ -1363,7 +1245,6 @@ function resize(){
     createLoveTexts();
 }
 
-
 window.addEventListener(
     "resize",
     resize
@@ -1374,39 +1255,30 @@ window.addEventListener(
    FORMA CORAZON
 ========================================================= */
 
-function heartPoint(
-    t,
-    scale
-){
+function heartPoint(t,scale){
 
-    const x =
+    const x=
         16*
         Math.pow(
             Math.sin(t),
             3
         );
 
-
-    const y =
+    const y=
         13*Math.cos(t)
         -5*Math.cos(2*t)
         -2*Math.cos(3*t)
         -Math.cos(4*t);
 
-
     return{
-
-        x:
-            x*scale,
-
-        y:
-            -y*scale
+        x:x*scale,
+        y:-y*scale
     };
 }
 
 
 /* =========================================================
-   PARTICULAS DE CORAZON
+   PARTICULAS CORAZON
 ========================================================= */
 
 function createHeartParticles(
@@ -1414,7 +1286,7 @@ function createHeartParticles(
     amount
 ){
 
-    const particles =
+    const particles=
         new Array(amount);
 
 
@@ -1424,52 +1296,45 @@ function createHeartParticles(
         i++
     ){
 
-        const t =
+        const t=
             Math.random()*
             Math.PI*2;
 
-
-        const p =
+        const p=
             heartPoint(
                 t,
                 scale
             );
 
-
-        const p2 =
+        const p2=
             heartPoint(
                 t+.015,
                 scale
             );
 
-
-        const dx =
+        const dx=
             p2.x-p.x;
 
-        const dy =
+        const dy=
             p2.y-p.y;
 
-
-        const len =
+        const len=
             Math.sqrt(
                 dx*dx+
                 dy*dy
             )||1;
 
-
-        const nx =
+        const nx=
             -dy/len;
 
-        const ny =
+        const ny=
             dx/len;
 
-
-        const thickness =
+        const thickness=
             (
                 Math.random()-.5
             )*
             scale*.72;
-
 
         particles[i]={
 
@@ -1490,7 +1355,6 @@ function createHeartParticles(
                 .35
         };
     }
-
 
     return particles;
 }
@@ -1533,7 +1397,6 @@ function createAccentParticles(
             Math.random()*
             Math.PI*2;
 
-
         const distance=
             radius*
             (
@@ -1569,7 +1432,6 @@ function createAccentParticles(
                 .30
         };
     }
-
 
     return particles;
 }
@@ -1613,7 +1475,6 @@ function createCentralHeart(){
             Math.min(W,H)*
             .035*
             settings.heartSize,
-
             65
         );
 }
@@ -1630,13 +1491,10 @@ function createHearts(){
 
     orbitHearts.length=0;
 
-
     const count=17;
-
 
     const radius=
         Math.min(W,H)*.34;
-
 
     const smallScale=
         Math.min(W,H)*.0048;
@@ -1721,14 +1579,12 @@ const loveWords=[
     "Mi alegría 🌷"
 ];
 
-
 const loveTexts=[];
 
 
 function createLoveTexts(){
 
     loveTexts.length=0;
-
 
     const base=
         Math.min(W,H);
@@ -1791,9 +1647,7 @@ function createStars(){
     const amount=
         Math.max(
             600,
-            Math.floor(
-                W*H/1800
-            )
+            Math.floor(W*H/1800)
         );
 
 
@@ -1831,12 +1685,10 @@ function createStars(){
             radius,
 
             size:
-                Math.random()*2.4+
-                .7,
+                Math.random()*2.4+.7,
 
             alpha:
-                Math.random()*.65+
-                .3,
+                Math.random()*.65+.3,
 
             twinkle:
                 Math.random()*6.283
@@ -1866,7 +1718,6 @@ function project3D(
         x*cy-
         z*sy;
 
-
     let rz=
         x*sy+
         z*cy;
@@ -1882,7 +1733,6 @@ function project3D(
     let ry=
         y*cp-
         rz*sp;
-
 
     rz=
         y*sp+
@@ -1974,9 +1824,7 @@ function drawStars(time){
 
 
         let y=
-            Math.cos(
-                star.phi
-            )*
+            Math.cos(star.phi)*
             star.radius;
 
 
@@ -2104,8 +1952,7 @@ function drawStars(time){
             ctx.shadowBlur=
                 Math.min(
                     7,
-                    size*
-                    brightness
+                    size*brightness
                 );
         }
 
@@ -2143,7 +1990,6 @@ function drawGlow(){
             W/2,
             H/2,
             0,
-
             W/2,
             H/2,
             radius
@@ -2155,12 +2001,10 @@ function drawGlow(){
         "rgba(255,35,130,.16)"
     );
 
-
     gradient.addColorStop(
         .4,
         "rgba(255,25,120,.06)"
     );
-
 
     gradient.addColorStop(
         1,
@@ -2171,9 +2015,7 @@ function drawGlow(){
     ctx.fillStyle=
         gradient;
 
-
     ctx.beginPath();
-
 
     ctx.arc(
         W/2,
@@ -2182,7 +2024,6 @@ function drawGlow(){
         0,
         Math.PI*2
     );
-
 
     ctx.fill();
 }
@@ -2196,7 +2037,6 @@ function drawOrbit(){
 
     const radius=
         Math.min(W,H)*.34;
-
 
     const points=70;
 
@@ -2217,13 +2057,9 @@ function drawOrbit(){
 
         const p=
             project3D(
-                Math.cos(a)*
-                radius,
-
+                Math.cos(a)*radius,
                 0,
-
-                Math.sin(a)*
-                radius
+                Math.sin(a)*radius
             );
 
 
@@ -2243,9 +2079,7 @@ function drawOrbit(){
     ctx.strokeStyle=
         "rgba(255,60,150,.08)";
 
-
     ctx.lineWidth=1;
-
 
     ctx.stroke();
 }
@@ -2332,7 +2166,6 @@ function drawHeartParticles(
 
     ctx.globalAlpha=1;
 
-
     ctx.restore();
 }
 
@@ -2366,8 +2199,7 @@ function drawAccentParticles(
         const size=
             Math.max(
                 .35,
-                p.size*
-                scale
+                p.size*scale
             );
 
 
@@ -2396,7 +2228,6 @@ function drawAccentParticles(
 
 
     ctx.globalAlpha=1;
-
 
     ctx.restore();
 }
@@ -2433,7 +2264,6 @@ function drawHeartText(
 
     ctx.textAlign=
         "center";
-
 
     ctx.textBaseline=
         "middle";
@@ -2548,9 +2378,7 @@ function drawOrbitHearts(time){
             Math.cos(angle)*
             heart.radius;
 
-
         const y=0;
-
 
         const z=
             Math.sin(angle)*
@@ -2678,8 +2506,7 @@ function drawLoveTexts(time){
 
         const angle=
             item.angle+
-            textTime*
-            item.speed;
+            textTime*item.speed;
 
 
         const x=
@@ -2747,9 +2574,7 @@ function drawLoveTexts(time){
 
 
         list.push({
-
             item,
-
             position
         });
     }
@@ -2786,7 +2611,6 @@ function drawLoveTexts(time){
             p.y<-100||
             p.y>H+100
         ){
-
             continue;
         }
 
@@ -2796,7 +2620,6 @@ function drawLoveTexts(time){
 
         ctx.textAlign=
             "center";
-
 
         ctx.textBaseline=
             "middle";
@@ -2834,7 +2657,7 @@ function drawLoveTexts(time){
 
 
 /* =========================================================
-   CORAZON CENTRAL
+   CORAZON CENTRAL - MEDIANO
 ========================================================= */
 
 function drawCentralHeart(){
@@ -2846,6 +2669,11 @@ function drawCentralHeart(){
 
         y:
             H/2,
+
+        /*
+           heartSize = 1
+           = tamaño MEDIANO
+        */
 
         scale:
             Math.min(W,H)*
@@ -2870,7 +2698,7 @@ function drawCentralHeart(){
 
     /*
        MI MERE
-       MISMA LOGICA QUE TE AMO
+       Misma lógica que Te amo.
     */
 
     ctx.save();
@@ -2891,7 +2719,6 @@ function drawCentralHeart(){
 
     ctx.textAlign=
         "center";
-
 
     ctx.textBaseline=
         "middle";
@@ -2940,7 +2767,6 @@ const music=
     document.getElementById(
         "music"
     );
-
 
 const musicButton=
     document.getElementById(
@@ -3004,66 +2830,55 @@ const settingsButton=
         "settingsButton"
     );
 
-
 const settingsPanel=
     document.getElementById(
         "settingsPanel"
     );
-
 
 const speedSlider=
     document.getElementById(
         "speedSlider"
     );
 
-
 const heartSizeSlider=
     document.getElementById(
         "heartSizeSlider"
     );
-
 
 const rotationButton=
     document.getElementById(
         "rotationButton"
     );
 
-
 const speedValue=
     document.getElementById(
         "speedValue"
     );
-
 
 const heartSizeValue=
     document.getElementById(
         "heartSizeValue"
     );
 
-
 const resetButton=
     document.getElementById(
         "resetButton"
     );
-
 
 const starBrightnessSlider=
     document.getElementById(
         "starBrightnessSlider"
     );
 
-
 const starBrightnessValue=
     document.getElementById(
         "starBrightnessValue"
     );
 
-
 const heartColorValue=
     document.getElementById(
         "heartColorValue"
     );
-
 
 const colorButtons=
     document.querySelectorAll(
@@ -3072,7 +2887,7 @@ const colorButtons=
 
 
 /* =========================================================
-   ABRIR PANEL
+   PANEL
 ========================================================= */
 
 settingsButton.addEventListener(
@@ -3097,11 +2912,8 @@ function updateSpeedLabel(){
     const labels=[
 
         "Muy lenta",
-
         "Lenta",
-
         "Normal",
-
         "Rápida"
     ];
 
@@ -3137,12 +2949,16 @@ function updateHeartSizeLabel(){
         settings.heartSize;
 
 
-    if(value<=.80){
+    if(
+        value<.9
+    ){
 
         heartSizeValue.textContent=
             "Pequeño";
 
-    }else if(value>1.15){
+    }else if(
+        value>1.15
+    ){
 
         heartSizeValue.textContent=
             "Grande";
@@ -3164,6 +2980,7 @@ heartSizeSlider.addEventListener(
                 heartSizeSlider.value
             );
 
+
         createCentralHeart();
 
         updateHeartSizeLabel();
@@ -3178,11 +2995,8 @@ heartSizeSlider.addEventListener(
 const colorNames={
 
     pink:"Rosa",
-
     red:"Rojo",
-
     yellow:"Amarillo",
-
     white:"Blanco"
 };
 
@@ -3261,11 +3075,12 @@ function updateStarBrightnessLabel(){
 starBrightnessSlider.addEventListener(
     "input",
     ()=>{
-        
+
         settings.starBrightness=
             Number(
                 starBrightnessSlider.value
             );
+
 
         updateStarBrightnessLabel();
     }
@@ -3304,7 +3119,7 @@ function updateRotationButton(){
 rotationButton.addEventListener(
     "click",
     ()=>{
-        
+
         settings.autoRotation=
             !settings.autoRotation;
 
@@ -3315,6 +3130,7 @@ rotationButton.addEventListener(
 
 /* =========================================================
    RESTAURAR
+   TAMBIEN VUELVE A MEDIANO
 ========================================================= */
 
 resetButton.addEventListener(
@@ -3323,7 +3139,10 @@ resetButton.addEventListener(
 
         settings.orbitSpeed=2;
 
-        settings.heartSize=.75;
+        /*
+           MEDIANO
+        */
+        settings.heartSize=1;
 
         settings.autoRotation=true;
 
@@ -3334,7 +3153,10 @@ resetButton.addEventListener(
 
         speedSlider.value=2;
 
-        heartSizeSlider.value=.75;
+        /*
+           MEDIANO
+        */
+        heartSizeSlider.value=1;
 
         starBrightnessSlider.value=2;
 
@@ -3375,7 +3197,10 @@ resetButton.addEventListener(
 
 speedSlider.value=2;
 
-heartSizeSlider.value=.75;
+/*
+   MEDIANO
+*/
+heartSizeSlider.value=1;
 
 starBrightnessSlider.value=2;
 
@@ -3410,10 +3235,6 @@ colorButtons.forEach(
 ========================================================= */
 
 function animate(time){
-
-    /*
-       Zoom suave
-    */
 
     camera.distance +=
         (
