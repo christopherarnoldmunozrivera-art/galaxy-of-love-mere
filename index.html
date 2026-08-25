@@ -51,23 +51,131 @@ canvas.dragging{
 
     pointer-events:none;
 }
+
+
+/* =========================================================
+   BOTON DE MUSICA
+========================================================= */
+
+#musicButton{
+
+    position:fixed;
+
+    right:22px;
+    bottom:22px;
+
+    z-index:20;
+
+    width:48px;
+    height:48px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(255,45,145,.12);
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    border:
+        1px solid
+        rgba(255,100,180,.35);
+
+    box-shadow:
+        0 0 12px
+        rgba(255,50,150,.35),
+
+        inset 0 0 12px
+        rgba(255,50,150,.12);
+
+    backdrop-filter:blur(8px);
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+#musicButton:hover{
+
+    transform:scale(1.08);
+
+    background:
+        rgba(255,45,145,.22);
+
+    box-shadow:
+        0 0 18px
+        rgba(255,50,150,.55),
+
+        inset 0 0 14px
+        rgba(255,50,150,.18);
+}
+
+#musicButton.playing{
+
+    animation:
+        musicPulse 1.6s infinite;
+}
+
+@keyframes musicPulse{
+
+    0%,100%{
+
+        box-shadow:
+            0 0 12px
+            rgba(255,50,150,.35),
+
+            inset 0 0 12px
+            rgba(255,50,150,.10);
+    }
+
+    50%{
+
+        box-shadow:
+            0 0 25px
+            rgba(255,50,150,.75),
+
+            inset 0 0 16px
+            rgba(255,50,150,.20);
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="title">Para mi Mere ❤️</div>
+<div class="title">
+    Para mi Mere ❤️
+</div>
+
+<audio
+    id="music"
+    src="musica.mp3"
+    loop
+    preload="auto">
+</audio>
+
+<button
+    id="musicButton"
+    aria-label="Reproducir música">
+    ♫
+</button>
 
 <canvas id="galaxy"></canvas>
 
 <script>
 
-const canvas = document.getElementById("galaxy");
+const canvas =
+    document.getElementById("galaxy");
 
-const ctx = canvas.getContext("2d", {
-    alpha:false,
-    desynchronized:true
-});
+const ctx =
+    canvas.getContext("2d",{
+        alpha:false,
+        desynchronized:true
+    });
 
 let W = 0;
 let H = 0;
@@ -80,22 +188,37 @@ let DPR = 1;
 
 function resize(){
 
-    W = window.innerWidth;
-    H = window.innerHeight;
+    W =
+        window.innerWidth;
 
-    DPR = Math.min(
-        window.devicePixelRatio || 1,
-        1.15
-    );
+    H =
+        window.innerHeight;
 
-    canvas.width = W * DPR;
-    canvas.height = H * DPR;
+    DPR =
+        Math.min(
+            window.devicePixelRatio || 1,
+            1.15
+        );
 
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
+    canvas.width =
+        W * DPR;
+
+    canvas.height =
+        H * DPR;
+
+    canvas.style.width =
+        W + "px";
+
+    canvas.style.height =
+        H + "px";
 
     ctx.setTransform(
-        DPR,0,0,DPR,0,0
+        DPR,
+        0,
+        0,
+        DPR,
+        0,
+        0
     );
 
     createStars();
@@ -166,7 +289,8 @@ window.addEventListener(
     "mousemove",
     e => {
 
-        if(!dragging) return;
+        if(!dragging)
+            return;
 
         const dx =
             e.clientX-lastX;
@@ -174,8 +298,11 @@ window.addEventListener(
         const dy =
             e.clientY-lastY;
 
-        lastX = e.clientX;
-        lastY = e.clientY;
+        lastX =
+            e.clientX;
+
+        lastY =
+            e.clientY;
 
         camera.yaw -=
             dx*0.008;
@@ -226,7 +353,10 @@ canvas.addEventListener(
    FORMA DEL CORAZON
 ========================================================= */
 
-function heartPoint(t,scale){
+function heartPoint(
+    t,
+    scale
+){
 
     const x =
         16 *
@@ -242,8 +372,12 @@ function heartPoint(t,scale){
         -Math.cos(4*t);
 
     return{
-        x:x*scale,
-        y:-y*scale
+
+        x:
+            x*scale,
+
+        y:
+            -y*scale
     };
 }
 
@@ -315,14 +449,10 @@ function createHeartParticles(
                 ny*thickness,
 
             size:
-                Math.random()*
-                .70+
-                .30,
+                Math.random()*.70+.30,
 
             alpha:
-                Math.random()*
-                .55+
-                .35
+                Math.random()*.55+.35
         };
     }
 
@@ -335,12 +465,18 @@ function createHeartParticles(
 ========================================================= */
 
 const accentColors = [
+
     "rgba(80,180,255,.80)",
+
     "rgba(100,220,255,.75)",
+
     "rgba(170,100,255,.70)",
+
     "rgba(255,80,180,.72)",
+
     "rgba(120,120,255,.70)"
 ];
+
 
 function createAccentParticles(
     radius,
@@ -392,9 +528,7 @@ function createAccentParticles(
                 ],
 
             alpha:
-                Math.random()*
-                .35+
-                .30
+                Math.random()*.35+.30
         };
     }
 
@@ -415,11 +549,11 @@ const centralHeart = {
     scale:1
 };
 
+
 function createCentralHeart(){
 
     const scale =
-        Math.min(W,H)*
-        .014;
+        Math.min(W,H)*.014;
 
     centralHeart.scale =
         scale;
@@ -444,6 +578,7 @@ function createCentralHeart(){
 
 const orbitHearts = [];
 
+
 function createHearts(){
 
     orbitHearts.length = 0;
@@ -451,12 +586,10 @@ function createHearts(){
     const count = 17;
 
     const radius =
-        Math.min(W,H)*
-        .34;
+        Math.min(W,H)*.34;
 
     const smallScale =
-        Math.min(W,H)*
-        .0048;
+        Math.min(W,H)*.0048;
 
     for(
         let i=0;
@@ -496,44 +629,83 @@ function createHearts(){
 const loveWords = [
 
     "Mi princesa ❤️",
+
     "Mi niña 🥰",
+
     "Mi cielo 💍",
+
     "Mi corazón ❤️",
+
     "Mi amor 💗",
+
     "Mi ángel 😇",
+
     "Mi cuchurrumina 🥺",
+
     "Mi terroncito de azúcar 🍬",
+
     "Mi vida 💕",
+
     "Mi bonita 🌷",
+
     "Mi hermosa 💖",
+
     "Mi reina 👑",
+
     "Mi preciosa 💎",
+
     "Mi todo ❤️",
+
     "Amor mío 💕",
+
     "Mi muñequita 🎀",
+
     "Mi felicidad ☀️",
+
     "Mi bebé 🥺",
+
     "Mi niña hermosa 🌸",
+
     "Mi amorcito 💗",
+
     "Mi tesoro 💎",
+
     "Mi estrellita ⭐",
+
     "Mi princesa hermosa 👑",
+
     "Mi consentida 🥰",
+
     "Mi mundo 🌎",
+
     "Mi razón ❤️",
+
     "Mi dulzura 🍯",
+
     "Mi bonita 💐",
+
     "Mi compañera 🫶",
+
     "Mi persona favorita ❤️",
+
     "Mi sueño ✨",
+
     "Mi luna 🌙",
+
     "Mi sol ☀️",
+
     "Mi flor 🌹",
+
     "Mi pequeña 🥺",
+
     "Mi amor eterno 💍",
+
     "Mi hogar 🏠",
+
     "Mi locura 😍",
+
     "Mi paz 🕊️",
+
     "Mi alegría 🌷"
 ];
 
@@ -593,6 +765,7 @@ function createLoveTexts(){
 
 let stars = [];
 
+
 function createStars(){
 
     stars.length = 0;
@@ -630,18 +803,18 @@ function createStars(){
         stars.push({
 
             theta,
+
             phi,
+
             radius,
 
             size:
                 Math.random()*
-                2.4+
-                .7,
+                2.4+.7,
 
             alpha:
                 Math.random()*
-                .65+
-                .3,
+                .65+.3,
 
             twinkle:
                 Math.random()*
@@ -662,14 +835,10 @@ function project3D(
 ){
 
     const cy =
-        Math.cos(
-            camera.yaw
-        );
+        Math.cos(camera.yaw);
 
     const sy =
-        Math.sin(
-            camera.yaw
-        );
+        Math.sin(camera.yaw);
 
     let rx =
         x*cy-
@@ -681,14 +850,10 @@ function project3D(
 
 
     const cp =
-        Math.cos(
-            camera.pitch
-        );
+        Math.cos(camera.pitch);
 
     const sp =
-        Math.sin(
-            camera.pitch
-        );
+        Math.sin(camera.pitch);
 
     let ry =
         y*cp-
@@ -751,6 +916,7 @@ function drawStars(time){
     const sinPitch =
         Math.sin(camera.pitch);
 
+
     for(
         const star of stars
     ){
@@ -768,15 +934,14 @@ function drawStars(time){
         const sinTheta =
             Math.sin(theta);
 
+
         let x =
             sinPhi*
             cosTheta*
             star.radius;
 
         let y =
-            Math.cos(
-                star.phi
-            )*
+            Math.cos(star.phi)*
             star.radius;
 
         let z =
@@ -832,7 +997,10 @@ function drawStars(time){
             px>W+10 ||
             py<-10 ||
             py>H+10
-        ) continue;
+        ){
+
+            continue;
+        }
 
 
         const twinkle =
@@ -909,6 +1077,7 @@ function drawGlow(){
             radius
         );
 
+
     gradient.addColorStop(
         0,
         "rgba(255,35,130,.16)"
@@ -923,6 +1092,7 @@ function drawGlow(){
         1,
         "rgba(0,0,0,0)"
     );
+
 
     ctx.fillStyle =
         gradient;
@@ -948,8 +1118,7 @@ function drawGlow(){
 function drawOrbit(){
 
     const radius =
-        Math.min(W,H)*
-        .34;
+        Math.min(W,H)*.34;
 
     const points = 70;
 
@@ -976,22 +1145,28 @@ function drawOrbit(){
                 radius
             );
 
-        if(i===0)
+
+        if(i===0){
+
             ctx.moveTo(
                 p.x,
                 p.y
             );
-        else
+
+        }else{
+
             ctx.lineTo(
                 p.x,
                 p.y
             );
+        }
     }
+
 
     ctx.strokeStyle =
         "rgba(255,60,150,.08)";
 
-    ctx.lineWidth = 1;
+    ctx.lineWidth=1;
 
     ctx.stroke();
 }
@@ -1024,6 +1199,7 @@ function drawHeartParticles(
     ctx.fillStyle =
         "rgba(255,55,150,.9)";
 
+
     for(
         const p of particles
     ){
@@ -1042,6 +1218,7 @@ function drawHeartParticles(
                 1.7
             );
 
+
         ctx.globalAlpha =
             p.alpha;
 
@@ -1057,6 +1234,7 @@ function drawHeartParticles(
 
         ctx.fill();
     }
+
 
     ctx.globalAlpha=1;
 
@@ -1083,6 +1261,7 @@ function drawAccentParticles(
         position.y
     );
 
+
     for(
         const p of particles
     ){
@@ -1090,8 +1269,10 @@ function drawAccentParticles(
         const size =
             Math.max(
                 .35,
-                p.size*scale
+                p.size*
+                scale
             );
+
 
         ctx.globalAlpha =
             p.alpha;
@@ -1112,6 +1293,7 @@ function drawAccentParticles(
         ctx.fill();
     }
 
+
     ctx.globalAlpha=1;
 
     ctx.restore();
@@ -1120,7 +1302,8 @@ function drawAccentParticles(
 
 /* =========================================================
    TE AMO
-   MISMA LOGICA DE ESCALA
+   MISMA LETRA QUE MI MERE
+   Y MISMA LOGICA DE ESCALA
 ========================================================= */
 
 function drawHeartText(
@@ -1131,23 +1314,25 @@ function drawHeartText(
     const scale =
         position.scale;
 
-    /*
-       Tamaño pequeño y ligado a la
-       perspectiva del corazón.
-    */
-
     const size =
         Math.max(
             4.5,
             7*scale
         );
 
+
     ctx.save();
+
+
+    /*
+       Mismo centro del corazón.
+    */
 
     ctx.translate(
         position.x,
         position.y
     );
+
 
     ctx.textAlign =
         "center";
@@ -1155,8 +1340,9 @@ function drawHeartText(
     ctx.textBaseline =
         "middle";
 
+
     /*
-       Misma letra que Mi Mere.
+       Meredith.
     */
 
     ctx.font =
@@ -1165,8 +1351,10 @@ function drawHeartText(
         "Brush Script MT",
         cursive`;
 
+
     ctx.fillStyle =
         "#ffffff";
+
 
     ctx.shadowColor =
         "rgba(255,55,150,.60)";
@@ -1177,11 +1365,13 @@ function drawHeartText(
             size*.35
         );
 
+
     ctx.fillText(
         text,
         0,
         0
     );
+
 
     ctx.restore();
 }
@@ -1193,10 +1383,11 @@ function drawHeartText(
 
 function drawOrbitHearts(time){
 
-    const list=[];
+    const list = [];
 
     const orbitSpeed =
         time*.00035;
+
 
     const cosYaw =
         Math.cos(camera.yaw);
@@ -1219,11 +1410,12 @@ function drawOrbitHearts(time){
             heart.angle+
             orbitSpeed;
 
+
         const x =
             Math.cos(angle)*
             heart.radius;
 
-        const y=0;
+        const y = 0;
 
         const z =
             Math.sin(angle)*
@@ -1296,7 +1488,8 @@ function drawOrbitHearts(time){
     ){
 
         /*
-           Siempre mirando a la cámara.
+           El corazón siempre mira
+           hacia la cámara.
         */
 
         drawHeartParticles(
@@ -1305,9 +1498,10 @@ function drawOrbitHearts(time){
             0
         );
 
+
         /*
-           Partículas de colores detrás
-           del texto.
+           Partículas de colores
+           estáticas.
         */
 
         drawAccentParticles(
@@ -1315,8 +1509,9 @@ function drawOrbitHearts(time){
             item.position
         );
 
+
         /*
-           Te amo queda exactamente dentro.
+           Te amo pegado al corazón.
         */
 
         drawHeartText(
@@ -1333,7 +1528,8 @@ function drawOrbitHearts(time){
 
 function drawLoveTexts(time){
 
-    const list=[];
+    const list = [];
+
 
     const cosYaw =
         Math.cos(camera.yaw);
@@ -1402,7 +1598,7 @@ function drawLoveTexts(time){
             );
 
 
-        const position={
+        const position = {
 
             x:
                 W/2+
@@ -1456,11 +1652,13 @@ function drawLoveTexts(time){
             p.y<-100 ||
             p.y>H+100
         ){
+
             continue;
         }
 
 
         ctx.save();
+
 
         ctx.textAlign =
             "center";
@@ -1468,14 +1666,18 @@ function drawLoveTexts(time){
         ctx.textBaseline =
             "middle";
 
+
         ctx.font =
             `normal ${size}px Arial`;
+
 
         ctx.fillStyle =
             "rgba(255,205,225,.86)";
 
+
         ctx.shadowColor =
             "rgba(255,50,145,.65)";
+
 
         ctx.shadowBlur =
             Math.min(
@@ -1483,11 +1685,13 @@ function drawLoveTexts(time){
                 size*.45
             );
 
+
         ctx.fillText(
             obj.item.text,
             p.x,
             p.y
         );
+
 
         ctx.restore();
     }
@@ -1497,7 +1701,7 @@ function drawLoveTexts(time){
 /* =========================================================
    CORAZON CENTRAL
    MI MERE ❤️
-   MISMA LOGICA QUE TE AMO
+   MISMA LOGICA DE TE AMO
 ========================================================= */
 
 function drawCentralHeart(){
@@ -1529,7 +1733,8 @@ function drawCentralHeart(){
 
 
     /*
-       Partículas de colores detrás.
+       Partículas de colores
+       estáticas detrás del texto.
     */
 
     drawAccentParticles(
@@ -1538,17 +1743,14 @@ function drawCentralHeart(){
     );
 
 
-    /* =====================================================
+    /*
        MI MERE ❤️
-
-       EXACTAMENTE LA MISMA LOGICA
-       QUE "TE AMO".
-
-       7 para Te amo
-       9 para Mi Mere
-    ===================================================== */
+       Usa la MISMA lógica que Te amo.
+       Solo es un poco más grande.
+    */
 
     ctx.save();
+
 
     const size =
         Math.max(
@@ -1556,11 +1758,6 @@ function drawCentralHeart(){
             9*position.scale
         );
 
-
-    /*
-       Nos movemos al mismo centro
-       del corazón.
-    */
 
     ctx.translate(
         position.x,
@@ -1574,10 +1771,6 @@ function drawCentralHeart(){
     ctx.textBaseline =
         "middle";
 
-
-    /*
-       Misma fuente.
-    */
 
     ctx.font =
         `normal ${size}px "Meredith",
@@ -1601,11 +1794,6 @@ function drawCentralHeart(){
         );
 
 
-    /*
-       Texto exactamente en 0,0:
-       el centro del corazón.
-    */
-
     ctx.fillText(
         "Mi Mere ❤️",
         0,
@@ -1618,14 +1806,71 @@ function drawCentralHeart(){
 
 
 /* =========================================================
+   MUSICA
+========================================================= */
+
+const music =
+    document.getElementById(
+        "music"
+    );
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+let musicPlaying = false;
+
+
+musicButton.addEventListener(
+    "click",
+    async () => {
+
+        try{
+
+            if(!musicPlaying){
+
+                await music.play();
+
+                musicPlaying = true;
+
+                musicButton.textContent =
+                    "❚❚";
+
+                musicButton.classList.add(
+                    "playing"
+                );
+
+            }else{
+
+                music.pause();
+
+                musicPlaying = false;
+
+                musicButton.textContent =
+                    "♫";
+
+                musicButton.classList.remove(
+                    "playing"
+                );
+            }
+
+        }catch(error){
+
+            console.error(
+                "No se pudo reproducir la música:",
+                error
+            );
+        }
+    }
+);
+
+
+/* =========================================================
    ANIMACION
 ========================================================= */
 
 function animate(time){
-
-    /*
-       Zoom suave.
-    */
 
     camera.distance +=
         (
@@ -1634,12 +1879,8 @@ function animate(time){
         )*.06;
 
 
-    ctx.globalAlpha=1;
+    ctx.globalAlpha = 1;
 
-
-    /*
-       Fondo.
-    */
 
     ctx.fillStyle =
         "#010006";
@@ -1652,44 +1893,15 @@ function animate(time){
     );
 
 
-    /*
-       Estrellas.
-    */
-
     drawStars(time);
-
-
-    /*
-       Halo.
-    */
 
     drawGlow();
 
-
-    /*
-       Orbita.
-    */
-
     drawOrbit();
-
-
-    /*
-       Frases exteriores.
-    */
 
     drawLoveTexts(time);
 
-
-    /*
-       17 corazones.
-    */
-
     drawOrbitHearts(time);
-
-
-    /*
-       Corazon principal.
-    */
 
     drawCentralHeart();
 
